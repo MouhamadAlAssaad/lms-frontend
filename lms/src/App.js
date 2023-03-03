@@ -9,8 +9,6 @@ import Attendance from './pages/attendance'
 import Reports from './pages/reports'
 
 
-
-
 function App() {
   return (
     <div className="App">
