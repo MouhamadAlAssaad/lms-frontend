@@ -1,7 +1,10 @@
 import React from 'react'
-
+import Sidebar from '../component/Sidebar/Sidebar';
 export default function reports() {
   return (
-    <div>reports</div>
+    <div>
+    <Sidebar/>
+    <h1>reports</h1>
+    </div>
   )
 }

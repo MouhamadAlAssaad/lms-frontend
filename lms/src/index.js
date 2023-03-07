@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import Sidebar from './Dashboard/sidebar';
+// import Sidebar from './Dashboard/sidebar';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
