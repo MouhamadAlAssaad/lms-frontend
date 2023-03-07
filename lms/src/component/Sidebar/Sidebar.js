@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useLocation, NavLink } from "react-router-dom";
-import "./sidebar.css";
+import { useLocation, NavLink,Link } from "react-router-dom";
+import "./Sidebar.css";
 import logo from "./lms.svg";
 import calender from "./icons/calendar.png";
 import logout from "./icons/logout.png";
@@ -23,7 +23,7 @@ function Sidebar(props) {
       <img className="sidebar_image" src={logo} alt="Logo" />
       <nav>
         <NavLink
-          to="/"
+          to="/dashboard"
           className="sidebar-links"
           onClick={() => handleTabClick(5)}
         >
@@ -73,10 +73,10 @@ function Sidebar(props) {
         </NavLink>
       </nav>
       <h3>
-        <NavLink to="#" onClick={props.logout} className="logout ">
+        <Link to="/" onClick={props.logout} className="logout ">
           <img className="sidebar_icons" src={logout} alt="Logo" />
           Logout
-        </NavLink>
+        </Link>
       </h3>
     </div>
   );
