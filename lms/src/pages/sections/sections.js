@@ -1,29 +1,35 @@
-import React, { useState, useEffect, useRef } from 'react';
-// import MaterialReactTable from 'material-react-table';
-import axios from 'axios';
-import Sidebar from '../../component/Sidebar/Sidebar';
-import './Class.css'
+import React from 'react'
+import Sidebar from '../../component/Sidebar/Sidebar'
+import Topbar from '../../topbar/topbar'
+import { useState, useEffect, useRef } from 'react';
 
+import axios from 'axios';
 import MaterialReactTable, {
   MaterialReactTableProps,
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
 } from 'material-react-table';
-import Topbar from '../../topbar/topbar';
-function Classes() {
+
+
+export default  sections =>{
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/course')
+    axios.get('http://localhost:8000/api/auth/section',{
+    // header:{
+    //   // Authorization:`Bearer${token}`
+    // }
+  })
       .then(response => {
         console.log(response.data); // log the data variable
-        if (response.data && Array.isArray(response.data.courses)) {
+        if (response.data && Array.isArray(response.data.sections)) {
           const formattedColumns = [
             { accessorKey: 'id', header: 'ID', type: 'numeric' },
             { accessorKey: 'name', header: 'Name' },
-            { accessorKey: 'description', header: 'Description' },
+            { accessorKey: 'capacity', header: 'Capacity' },
+            { accessorKey: 'content', header: 'content' },
             {accessorKey: 'created_at', header: 'created-AT'},
             {accessorKey: 'updated_at', header: 'updates-AT'},
             {
@@ -32,7 +38,7 @@ function Classes() {
               type: 'custom',
               customComponent: ({ rowData }) => (
                 <>
-                  <button className='hassan' onClick={() => handleEdit(rowData.id)}>Edit</button>
+                  <button className='mhamad' onClick={() => handleEdit(rowData.id)}>Edit</button>
                   <button onClick={() => handleDelete(rowData.id)}>Delete</button>
                 </>
               )
@@ -40,7 +46,7 @@ function Classes() {
           ];
             
           setColumns(formattedColumns);
-          setData(response.data.courses);
+          setData(response.data.sections);
         } else {
           console.error('Invalid response format');
           setData([]);
@@ -58,7 +64,7 @@ function Classes() {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:8000/api/course', formData)
+    axios.post('http://localhost:8000/api/section', formData)
       .then(response => {
         console.log(response.data); // log the response data
         setData([...data, response.data]);
@@ -72,7 +78,7 @@ function Classes() {
   }
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8000/api/course/${id}`)
+    axios.delete(`http://localhost:8000/api/section/${id}`)
       .then(response => {
         console.log(response.data); // log the response data
       });
@@ -92,10 +98,11 @@ function Classes() {
     console.log(tableInstanceRef.current.getState().sorting);
   }
 
+
   return (
-    <>
-    <Sidebar />
-      <Topbar/>
+    <div>
+    <Topbar/>
+    <Sidebar/>
     <div className='table-container'>
       <MaterialReactTable 
         columns={formattedColumns} 
@@ -108,11 +115,6 @@ function Classes() {
         tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
         />
     </div>
-    </>
-  );
+    </div>
+  )
 }
-
-     
-export default Classes;
- 
-

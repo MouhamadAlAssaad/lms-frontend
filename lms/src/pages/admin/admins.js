@@ -1,9 +1,11 @@
 import React from 'react'
-import Sidebar from '../component/Sidebar/Sidebar'
+import Sidebar from '../../component/Sidebar/Sidebar'
+import Topbar from '../../topbar/topbar'
 
 export default function admins() {
   return (
     <div>
+    <Topbar/>  
     <Sidebar/>
     <h1>admins</h1>
     </div>
