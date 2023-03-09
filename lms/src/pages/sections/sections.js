@@ -2,6 +2,8 @@ import React from 'react'
 import Sidebar from '../../component/Sidebar/Sidebar'
 import Topbar from '../../topbar/topbar'
 import { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
+
 
 import axios from 'axios';
 import MaterialReactTable, {
@@ -17,10 +19,9 @@ export default  sections =>{
   const [formattedColumns, setColumns] = useState([]);
 
   useEffect(() => {
+    const token = Cookies.get('auth');
     axios.get('http://localhost:8000/api/auth/section',{
-    // header:{
-    //   // Authorization:`Bearer${token}`
-    // }
+      headers: { Authorization: `Bearer ${token}` },
   })
       .then(response => {
         console.log(response.data); // log the data variable
