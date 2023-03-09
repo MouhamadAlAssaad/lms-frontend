@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Sidebar from '../../component/Sidebar/Sidebar';
 import './Class.css'
+import Cookies from 'js-cookie';
+
 
 import MaterialReactTable, {
   MaterialReactTableProps,
@@ -11,12 +13,18 @@ import MaterialReactTable, {
   MRT_Row,
 } from 'material-react-table';
 import Topbar from '../../topbar/topbar';
+
+
 function Classes() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/course')
+    const token = Cookies.get('auth');
+    axios.get('http://localhost:8000/api/auth/course',
+    {
+      headers: { Authorization: `Bearer ${token}` },
+  })
       .then(response => {
         console.log(response.data); // log the data variable
         if (response.data && Array.isArray(response.data.courses)) {
@@ -26,17 +34,7 @@ function Classes() {
             { accessorKey: 'description', header: 'Description' },
             {accessorKey: 'created_at', header: 'created-AT'},
             {accessorKey: 'updated_at', header: 'updates-AT'},
-            {
-              accessorKey: 'actions',
-              header: 'Actions',
-              type: 'custom',
-              customComponent: ({ rowData }) => (
-                <>
-                  <button className='hassan' onClick={() => handleEdit(rowData.id)}>Edit</button>
-                  <button onClick={() => handleDelete(rowData.id)}>Delete</button>
-                </>
-              )
-            }
+   
           ];
             
           setColumns(formattedColumns);
@@ -94,17 +92,15 @@ function Classes() {
 
   return (
     <>
-    <Sidebar />
-      <Topbar/>
     <div className='table-container'>
       <MaterialReactTable 
         columns={formattedColumns} 
         data={data} 
         enableColumnOrdering //enable some features
-        enableRowSelection 
+        // enableRowSelection 
         enablePagination={true} //disable a default feature
-        onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
-        state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
+        // onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
+        // state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
         tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
         />
     </div>

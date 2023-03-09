@@ -102,8 +102,7 @@ export default  sections =>{
 
   return (
     <div>
-    <Topbar/>
-    <Sidebar/>
+    
     <div className='table-container'>
       <MaterialReactTable 
         columns={formattedColumns} 

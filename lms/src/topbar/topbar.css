@@ -5,6 +5,8 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 15px;
+    position: absolute;
+    right: 0;
 }
 
 .topbar-admin {

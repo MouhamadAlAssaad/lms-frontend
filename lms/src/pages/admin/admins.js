@@ -5,9 +5,7 @@ import Topbar from '../../topbar/topbar'
 export default function admins() {
   return (
     <div>
-    <Topbar/>  
-    <Sidebar/>
-    <h1>admins</h1>
+      <h1>admins</h1>
     </div>
   )
 }
