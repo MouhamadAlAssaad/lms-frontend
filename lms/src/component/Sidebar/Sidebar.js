@@ -10,14 +10,17 @@ import sections from "./icons/sections.png";
 import student from "./icons/student.png";
 import user from "./icons/user.png";
 
+
 function Sidebar(props) {
+  
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
-
+  
   const handleTabClick = (tabNumber) => {
     setActiveTab(tabNumber);
   };
-
+  
+  if (useLocation().pathname == "/") return null; 
   return (
     <div className="sidebar">
       <img className="sidebar_image" src={logo} alt="Logo" />
