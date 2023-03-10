@@ -2,11 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Sidebar from '../../component/Sidebar/Sidebar';
-
 import './Class.css'
-import Cookies from 'js-cookie';
-
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
