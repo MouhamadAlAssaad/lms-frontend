@@ -1,17 +1,16 @@
 import { Route,Routes } from 'react-router-dom';
 import './App.css';
-import Admins from './pages/admins'
-import Students from './pages/students'
+import Admins from './pages/admin/admins'
+import Students from './pages/students/students'
 import Classes from './pages/Class/classes'
-import Sections from './pages/sections'
-import Attendance from './pages/attendance'
-import Reports from './pages/reports'
+import Sections from './pages/sections/sections'
+import Attendance from './pages/attendance/attendance'
 import Login from "./pages/login/login_page.js";
-import Dashboard from './pages/dashboard';
+import Dashboard from './pages/dashboard/dashboard';
 
 function App() {
   return (
-    <div className="App">
+    <div >
       
           <Routes>
             <Route path="/" element={<Login />} />
@@ -21,7 +20,6 @@ function App() {
             <Route path="/classes" element={<Classes/>}/>
             <Route path="/sections" element={<Sections/>}/>
             <Route path="/attendance" element={<Attendance/>}/>
-            <Route path="/reports" element={<Reports/>}/>
           </Routes>
    
     </div>

@@ -26,7 +26,6 @@ import MaterialReactTable, {
   MRT_Row,
 } from 'material-react-table';
 
-
 function Classes() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
@@ -222,7 +221,11 @@ const handleDelete = (id) => {
   
   
   return (
+    <>
+    <Sidebar />
+      <Topbar/>
     <div className='table-container'>
+
       <Sidebar />
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
   <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
@@ -262,7 +265,19 @@ const handleDelete = (id) => {
 />
 <AddCourseForm />
 
+      <MaterialReactTable 
+        columns={formattedColumns} 
+        data={data} 
+        enableColumnOrdering //enable some features
+        enableRowSelection 
+        enablePagination={true} //disable a default feature
+        onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
+        state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
+        tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
+        />
+
     </div>
+    </>
   );
 }
 

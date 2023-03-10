@@ -1,0 +1,36 @@
+.topbar {
+    margin-left: 18rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.topbar-admin {
+    display: flex;
+    align-items: center;
+    width: 300px;
+    margin-right: 4rem;
+    justify-content: space-around;
+}
+
+.topbar-admin h4 {
+    margin: 0;
+}
+
+.topbar-end {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.logOut {
+    align-self: end;
+    cursor: pointer;
+}
+
+.topbarimg {
+    width: 36px;
+    height: 36px;
+}
