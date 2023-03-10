@@ -296,7 +296,10 @@ function Sections() {
           }}
           editingMode="row"
           enableEditing
-          onEditingRowSave={handleUpdate}
+          onEditingRowSave={handleUpdate}                
+
+
+          
         />
         <AddSectionForm />
       </div>
