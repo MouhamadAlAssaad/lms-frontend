@@ -1,9 +1,8 @@
 import React from 'react'
-import Sidebar from '../../component/Sidebar/Sidebar'
-import Topbar from '../../topbar/topbar'
 import { useState, useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
-
+import "./sections.css";
+import Add from "./plus.svg"
 
 import axios from 'axios';
 import MaterialReactTable, {
@@ -104,6 +103,7 @@ export default  sections =>{
     <div>
     
     <div className='table-container'>
+      <button className='sections-button' type='button'>Add <img className='sections-button-icon' src={Add}/></button>
       <MaterialReactTable 
         columns={formattedColumns} 
         data={data} 

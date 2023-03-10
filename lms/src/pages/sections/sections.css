@@ -1,0 +1,19 @@
+.sections-button {
+    margin: 20px;
+    background-color: rgb(124, 124, 255);
+    border-radius: 8px;
+    border: none;
+    padding: 8px 18px;
+    align-self: end;
+    font-size: 30px;
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+.sections-button-icon{
+    width: 20px;
+    filter: invert();
+}
+.table-container{
+    display: flex;
+    flex-direction: column  ;
+}
