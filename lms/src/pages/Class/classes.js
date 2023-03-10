@@ -1,43 +1,55 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import MaterialReactTable from 'material-react-table';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import Sidebar from '../../component/Sidebar/Sidebar';
-import './Class.css'
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import AddIcon from '@mui/icons-material/Add';
+import Swal from 'sweetalert2';
+import './Class.css';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  MenuItem,
+  Stack,
+  TextField,
+  Tooltip,
+} from '@mui/material';
 import MaterialReactTable, {
   MaterialReactTableProps,
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
 } from 'material-react-table';
+
+
 function Classes() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    axios.get('http://localhost:8000/api/course')
-      .then(response => {
-        console.log(response.data); // log the data variable
+    const token = Cookies.get('auth');
+    axios
+      .get('http://localhost:8000/api/auth/course', {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response.data);
         if (response.data && Array.isArray(response.data.courses)) {
           const formattedColumns = [
-            { accessorKey: 'id', header: 'ID', type: 'numeric' },
-            { accessorKey: 'name', header: 'Name' },
-            { accessorKey: 'description', header: 'Description' },
-            {accessorKey: 'created_at', header: 'created-AT'},
-            {accessorKey: 'updated_at', header: 'updates-AT'},
-            {
-              accessorKey: 'actions',
-              header: 'Actions',
-              type: 'custom',
-              customComponent: ({ rowData }) => (
-                <>
-                  <button className='hassan' onClick={() => handleEdit(rowData.id)}>Edit</button>
-                  <button onClick={() => handleDelete(rowData.id)}>Delete</button>
-                </>
-              )
-            }
+            { accessorKey: 'id', header: 'ID', type: 'numeric',editable:false },
+            { accessorKey: 'name', header: 'Name',editable: true},
+            { accessorKey: 'description', header: 'Description',editable: true },
+            { accessorKey: 'created_at', header: 'created-AT',editable:false },
+            { accessorKey: 'updated_at', header: 'updates-AT',editable: false },
           ];
-            
+
           setColumns(formattedColumns);
           setData(response.data.courses);
         } else {
@@ -45,37 +57,96 @@ function Classes() {
           setData([]);
         }
       })
-      .catch(error => console.error(error));
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
-  const [formData, setFormData] = useState({ name: '', description: '' });
+  // edit course
 
-  const handleFormChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  }
+const handleUpdate = (updatedRow) => {
+  const token = Cookies.get('auth');
+  const { ...updatedValues } = updatedRow.values;
 
-  const handleAdd = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:8000/api/course', formData)
-      .then(response => {
-        console.log(response.data); // log the response data
-        setData([...data, response.data]);
-        setFormData({ name: '', description: '' });
-      });
-  }
+  Swal.fire({
+    title: 'Are you sure you want to edit this course?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, update it',
+    cancelButtonText: 'No, cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios
+        .post(`http://localhost:8000/api/auth/course/${updatedRow.values.id}`, 
+          {
+            ...updatedValues,
+            _method: 'PUT'
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Update successful',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Update failed',
+            text: error.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
+    }
+  });
+};
 
-  const handleEdit = (id) => {
-    // implement the edit functionality here
-    console.log(`Edit clicked for id: ${id}`);
-  }
+  
+//  delete course
+const handleDelete = (id) => {
+  const token = Cookies.get('auth');
 
-  const handleDelete = (id) => {
-    axios.delete(`http://localhost:8000/api/course/${id}`)
-      .then(response => {
-        console.log(response.data); // log the response data
-      });
-  }
+  Swal.fire({
+    title: 'Are you sure you want to delete this course?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, delete it',
+    cancelButtonText: 'No, cancel'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios
+        .delete(`http://localhost:8000/api/auth/course/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((response) => {
+          console.log(response.data);
+          Swal.fire({
+            icon: 'success',
+            title: 'Delete successful',
+            showConfirmButton: false,
+            timer: 1500
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Delete failed',
+            text: error.message,
+            showConfirmButton: false,
+            timer: 1500
+          });
+        });
+    }
+  });
+};
+
 
   const [rowSelection, setRowSelection] = useState({});
 
@@ -83,27 +154,114 @@ function Classes() {
     //do something when the row selection changes
   }, [rowSelection]);
 
-  //Or, optionally, you can get a reference to the underlying table instance
   const tableInstanceRef = useRef(null);
 
   const someEventHandler = () => {
-    //read the table state during an event from the table instance ref
     console.log(tableInstanceRef.current.getState().sorting);
-  }
+  };
 
+
+  // add course
+  const AddCourseForm = () => {
+    const [course, setCourse] = useState({
+      name: '',
+      description: ''
+    });
+    const [isDisabled, setIsDisabled] = useState(true); // new state variable
+  
+    const handleFormChange = (event) => {
+      const { name, value } = event.target;
+      setCourse(prevState => ({ ...prevState, [name]: value }));
+    };
+  
+    useEffect(() => {
+      // update isDisabled state whenever name or description changes
+      setIsDisabled(course.name === '' && course.description === '');
+    }, [course.name, course.description]);
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const token = Cookies.get('auth');
+      axios
+        .post(
+          'http://localhost:8000/api/auth/course',
+          {
+            name: course.name,
+            description: course.description
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` }
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          setData([...data, response.data]); // add the new course to the data state
+          // reset the form data state
+          setCourse({
+            name: '',
+            description: ''
+          });
+          setOpen(false);
+        });
+    };
+  
+    return (
+      <Dialog open={open} onClose={() => setOpen(false)}>
+        <DialogTitle>Add New Course</DialogTitle>
+        <DialogContent>
+          <TextField label="Name" name="name" value={course.name} onChange={handleFormChange} fullWidth required   sx={{ mb: 2 }}/>
+          <TextField label="Description" name="description" value={course.description} onChange={handleFormChange} fullWidth required  sx={{ mb: 2 }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpen(false)}>Cancel</Button>
+          <Button onClick={handleSubmit} disabled={isDisabled}>Add</Button> {/* add disabled prop */}
+        </DialogActions>
+      </Dialog>
+    );
+  };
+  
+  
   return (
     <div className='table-container'>
       <Sidebar />
-      <MaterialReactTable 
-        columns={formattedColumns} 
-        data={data} 
-        enableColumnOrdering //enable some features
-        enableRowSelection 
-        enablePagination={true} //disable a default feature
-        onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
-        state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
-        tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
-        />
+      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+  <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
+    Add Course
+    <AddIcon style={{ marginLeft: "0.5em" }} />
+  </Button>
+</Box>
+      <MaterialReactTable
+  columns={formattedColumns}
+  data={data}
+  enableColumnOrdering
+  enablePagination={true}
+  tableInstanceRef={tableInstanceRef}
+  enableRowActions
+  renderRowActionMenuItems={({ row }) => {
+    const course = row.original;
+    return [
+      <MenuItem
+      key={`delete-${course.id}`}
+      onClick={() => handleDelete(course.id)}
+      sx={{ pl: '10px' }} // Add 20px of padding to the left side
+    >
+     <IconButton size="small" sx={{ mr: 1.5 }}>
+        <DeleteIcon fontSize="small" />
+      </IconButton>
+      Delete
+    </MenuItem>
+    
+      // <MenuItem key={`update-${course.id}`} onClick={() => handleUpdate(course)}>Edit</MenuItem>
+    ];
+  }}
+  editingMode="row"
+  enableEditing
+  onEditingRowSave={handleUpdate}
+
+
+/>
+<AddCourseForm />
+
     </div>
   );
 }

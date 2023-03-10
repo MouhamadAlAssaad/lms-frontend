@@ -2,18 +2,21 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "./lms.svg"
 import Sidebar from '../../component/Sidebar/Sidebar';
-import './login.css'
+import './login.css';
+import { useCookies } from 'react-cookie';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['name']);
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
-  
-    fetch('http://localhost:8000/api/auth/login', {
+
+    fetch('http://localhost:8000/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -25,14 +28,17 @@ const Login = () => {
     })
     .then(response => response.json())
     .then(data => {
+
       console.log("Login response:", data);
       if (data.access_token) {
+        setCookie("auth", data.access_token);
         setLoggedIn(true);
         navigate('/dashboard');
       }
     })
     .catch(error => console.error(error));
   }
+
   return (
     <>
       {loggedIn ? (
