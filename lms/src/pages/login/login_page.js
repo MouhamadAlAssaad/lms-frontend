@@ -13,6 +13,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['name']);
 
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    
     fetch('http://localhost:8000/api/login', {
       method: 'POST',
       headers: {
@@ -33,8 +37,8 @@ const Login = () => {
       }
     })
     .catch(error => console.error(error));
+  
   }
-
   return (
 
     <>
