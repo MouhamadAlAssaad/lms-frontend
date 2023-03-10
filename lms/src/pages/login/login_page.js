@@ -12,6 +12,10 @@ const Login = () => {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['name']);
 
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
     fetch('http://localhost:8000/api/login', {
       method: 'POST',
       headers: {
@@ -24,6 +28,7 @@ const Login = () => {
     })
     .then(response => response.json())
     .then(data => {
+
       console.log("Login response:", data);
       if (data.access_token) {
         setCookie("auth", data.access_token);
@@ -33,6 +38,7 @@ const Login = () => {
     })
     .catch(error => console.error(error));
   }
+  
 
   return (
     <>
