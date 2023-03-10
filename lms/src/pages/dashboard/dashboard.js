@@ -7,9 +7,8 @@ import React, { useState, useEffect, useRef } from 'react';
 function Dashboard() {
   return (
     <div>
-      <Topbar/>
-      <Sidebar/>
-      <h1>Dashboard</h1>
+
+
       </div>
 
   );

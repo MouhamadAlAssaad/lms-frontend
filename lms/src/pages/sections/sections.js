@@ -1,7 +1,8 @@
 import React from 'react'
-import Sidebar from '../../component/Sidebar/Sidebar'
-import Topbar from '../../topbar/topbar'
 import { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
+import "./sections.css";
+import Add from "./plus.svg"
 
 import axios from 'axios';
 import MaterialReactTable, {
@@ -17,10 +18,9 @@ export default  sections =>{
   const [formattedColumns, setColumns] = useState([]);
 
   useEffect(() => {
+    const token = Cookies.get('auth');
     axios.get('http://localhost:8000/api/auth/section',{
-    // header:{
-    //   // Authorization:`Bearer${token}`
-    // }
+      headers: { Authorization: `Bearer ${token}` },
   })
       .then(response => {
         console.log(response.data); // log the data variable
@@ -101,9 +101,9 @@ export default  sections =>{
 
   return (
     <div>
-    <Topbar/>
-    <Sidebar/>
+    
     <div className='table-container'>
+      <button className='sections-button' type='button'>Add <img className='sections-button-icon' src={Add}/></button>
       <MaterialReactTable 
         columns={formattedColumns} 
         data={data} 

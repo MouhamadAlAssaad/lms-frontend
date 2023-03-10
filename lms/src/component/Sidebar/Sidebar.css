@@ -79,5 +79,8 @@
     width: 111%;
     color: black;
     position: relative;
-    color: rgb(124, 124, 255)
+    color: rgb(124, 124, 255);
+}
+.active img{
+  filter: invert(43%) sepia(98%) saturate(499%) hue-rotate(204deg) brightness(101%) contrast(101%);
 }

@@ -2,6 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Sidebar from '../../component/Sidebar/Sidebar';
+
+import './Class.css'
+import Cookies from 'js-cookie';
+
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
@@ -19,12 +24,14 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
+
 import MaterialReactTable, {
   MaterialReactTableProps,
   MRT_Cell,
   MRT_ColumnDef,
   MRT_Row,
 } from 'material-react-table';
+
 
 function Classes() {
   const [data, setData] = useState([]);
@@ -34,6 +41,7 @@ function Classes() {
 
   useEffect(() => {
     const token = Cookies.get('auth');
+
     axios
       .get('http://localhost:8000/api/auth/course', {
         headers: { Authorization: `Bearer ${token}` },
@@ -47,6 +55,7 @@ function Classes() {
             { accessorKey: 'description', header: 'Description',editable: true },
             { accessorKey: 'created_at', header: 'created-AT',editable:false },
             { accessorKey: 'updated_at', header: 'updates-AT',editable: false },
+
           ];
 
           setColumns(formattedColumns);
@@ -222,8 +231,6 @@ const handleDelete = (id) => {
   
   return (
     <>
-    <Sidebar />
-      <Topbar/>
     <div className='table-container'>
 
       <Sidebar />
@@ -269,10 +276,10 @@ const handleDelete = (id) => {
         columns={formattedColumns} 
         data={data} 
         enableColumnOrdering //enable some features
-        enableRowSelection 
+        // enableRowSelection 
         enablePagination={true} //disable a default feature
-        onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
-        state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
+        // onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
+        // state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
         tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
         />
 

@@ -1,11 +1,15 @@
 import  "./topbar.css";
 import { HiOutlineLogout } from "react-icons/hi";
 import profile from "./adminprofile.png";
+import { useLocation } from "react-router-dom";
+
 
 function Topbar() {
+
   const style = {
     backgroundImage: `url(${process.env.PUBLIC_URL + "/Assets/people.png"})`,
   };
+  if (useLocation().pathname == "/") return null; 
 
   return (
     <div className="topbar">

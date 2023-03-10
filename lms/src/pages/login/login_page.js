@@ -4,6 +4,7 @@ import logo from "./lms.svg"
 import Sidebar from '../../component/Sidebar/Sidebar';
 import './login.css';
 import { useCookies } from 'react-cookie';
+import background from "./loginwallpaper.jpg"
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -35,7 +36,12 @@ const Login = () => {
   }
 
   return (
+
     <>
+    <div>
+      <img className='login-wallpaper' src={background}/>
+      <div className='overlayy'></div>
+      </div>
       {loggedIn ? (
         <Sidebar />
         
