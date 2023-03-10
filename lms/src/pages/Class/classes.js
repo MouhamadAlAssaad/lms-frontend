@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Cookies from 'js-cookie';
-import Sidebar from '../../component/Sidebar/Sidebar';
+
 import './Class.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -68,7 +67,7 @@ function Classes() {
 
   // edit course
 
-const handleUpdate = (updatedRow) => {
+  const handleUpdate = (updatedRow) => {
   const token = Cookies.get('auth');
   const { ...updatedValues } = updatedRow.values;
 
@@ -110,11 +109,11 @@ const handleUpdate = (updatedRow) => {
         });
     }
   });
-};
+  };
 
   
-//  delete course
-const handleDelete = (id) => {
+  //  delete course
+  const handleDelete = (id) => {
   const token = Cookies.get('auth');
 
   Swal.fire({
@@ -149,7 +148,7 @@ const handleDelete = (id) => {
         });
     }
   });
-};
+  };
 
 
   const [rowSelection, setRowSelection] = useState({});
@@ -230,21 +229,20 @@ const handleDelete = (id) => {
     
     <div className='table-container'>
 
-      <Sidebar />
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-  <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
+    <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
     Add Course
     <AddIcon style={{ marginLeft: "0.5em" }} />
-  </Button>
-</Box>
+    </Button>
+    </Box>
       <MaterialReactTable
-  columns={formattedColumns}
-  data={data}
-  enableColumnOrdering
-  enablePagination={true}
-  tableInstanceRef={tableInstanceRef}
-  enableRowActions
-  renderRowActionMenuItems={({ row }) => {
+    columns={formattedColumns}
+    data={data}
+    enableColumnOrdering
+    enablePagination={true}
+    tableInstanceRef={tableInstanceRef}
+    enableRowActions
+    renderRowActionMenuItems={({ row }) => {
     const course = row.original;
     return [
       <MenuItem
@@ -266,10 +264,11 @@ const handleDelete = (id) => {
   onEditingRowSave={handleUpdate}
 
 
-/>
-<AddCourseForm />
+  />
+  <AddCourseForm />
 
-     
+
+
 
     </div>
     </>
