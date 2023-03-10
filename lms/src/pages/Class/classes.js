@@ -2,9 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 import './Class.css'
-import Cookies from 'js-cookie';
-
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import Swal from 'sweetalert2';
@@ -229,6 +226,7 @@ function Classes() {
   
   return (
     <>
+    
     <div className='table-container'>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
@@ -269,16 +267,8 @@ function Classes() {
   />
   <AddCourseForm />
 
-      {/* <MaterialReactTable 
-        columns={formattedColumns} 
-        data={data} 
-        enableColumnOrdering //enable some features
-        // enableRowSelection 
-        enablePagination={true} //disable a default feature
-        // onRowSelectionChange={setRowSelection} //hoist internal state to your own state (optional)
-        // state={{ rowSelection }} //manage your own state, pass it back to the table (optional)
-        tableInstanceRef={tableInstanceRef} //get a reference to the underlying table instance (optional)
-        /> */}
+
+
 
     </div>
     </>
