@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Cookies from "js-cookie";
+
+import Cookies from 'js-cookie';
+
 import './Class.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -212,8 +214,8 @@ function Classes() {
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle>Add New Course</DialogTitle>
         <DialogContent>
-          <TextField label="Name" name="name" value={course.name} onChange={handleFormChange} fullWidth required   sx={{ mb: 2 }}/>
-          <TextField label="Description" name="description" value={course.description} onChange={handleFormChange} fullWidth required  sx={{ mb: 2 }} />
+          <TextField label="Name" name="name"  onChange={handleFormChange} fullWidth required   sx={{ mb: 2 }}/>
+          <TextField label="Description" name="description" onChange={handleFormChange} fullWidth required  sx={{ mb: 2 }} />
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
