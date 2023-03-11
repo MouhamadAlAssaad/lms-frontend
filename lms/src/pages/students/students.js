@@ -205,7 +205,7 @@ function Students() {
   
     const handleFormChange = (event) => {
       const { name, value } = event.target;
-      setStude(prevState => ({ ...prevState, [name]: value }));
+      setStudent(prevState => ({ ...prevState, [name]: value }));
     };
   
     useEffect(() => {
