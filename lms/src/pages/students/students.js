@@ -54,6 +54,7 @@ function Students() {
             {
               accessorKey: "picture",
               header: "Picture",
+              enableEditing: false,
               Cell: ({ row }) => (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <label htmlFor={`file-upload-${row.index}`}>
@@ -70,6 +71,7 @@ function Students() {
   onChange={(e) => {
     console.log('Selected file:', e.target.files[0]);
     handleUpdatePicture({ values: { id: row.original.id, picture: e.target.files[0] } })
+   
   }}
 />
                 </Box>
@@ -276,6 +278,7 @@ const handleUpdatePicture = (updatedRow) => {
   };
 
 
+  
   // add student
   const AddStudentForm = () => {
     const [student, setStudent] = useState({
