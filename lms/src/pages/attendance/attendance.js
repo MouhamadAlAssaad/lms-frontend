@@ -51,11 +51,11 @@ function Classes() {
         console.log(response.data);
         if (response.data && Array.isArray(response.data.message)) {
           const formattedColumns = [
-            { accessorKey: 'id', header: 'ID', type: 'numeric',editable:false },
+            { accessorKey: 'id', header: 'ID', type: 'numeric', enableEditing: false,},
             { accessorKey: 'date', header: 'Date',editable: true },
             { accessorKey: 'case', header: 'Case',editable: true },
-            { accessorKey: 'created_at', header: 'created-AT',editable:false },
-            { accessorKey: 'updated_at', header: 'updates-AT',editable: false },
+            { accessorKey: 'created_at', header: 'created-AT', enableEditing: false,},
+            { accessorKey: 'updated_at', header: 'updates-AT', enableEditing: false, },
           ];
 
           setColumns(formattedColumns);

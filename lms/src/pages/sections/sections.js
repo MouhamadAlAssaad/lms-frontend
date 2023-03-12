@@ -37,12 +37,12 @@ function Sections() {
         console.log(response.data); // log the data variable
         if (response.data && Array.isArray(response.data.sections)) {
           const formattedColumns = [
-            { accessorKey: "id", header: "ID", type: "numeric" },
+            { accessorKey: "id", header: "ID", type: "numeric" , enableEditing: false,},
             { accessorKey: "name", header: "Name" },
             { accessorKey: "capacity", header: "Capacity" },
             { accessorKey: "content", header: "content" },
-            { accessorKey: "created_at", header: "created-AT" },
-            { accessorKey: "updated_at", header: "updates-AT" },
+            { accessorKey: "created_at", header: "created-AT", enableEditing: false, },
+            { accessorKey: "updated_at", header: "updates-AT", enableEditing: false, },
           ];
 
           setColumns(formattedColumns);

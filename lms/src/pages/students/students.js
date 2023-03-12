@@ -6,6 +6,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
 import "./Student.css";
+import { Avatar } from '@mui/material';
 import {
   Box,
   Button,
@@ -42,30 +43,55 @@ function Students() {
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data && Array.isArray(response.data.students)) {
+        if (response.data && Array.isArray(response.data.message)) {
           const formattedColumns = [
             {
               accessorKey: "id",
               header: "ID",
               type: "numeric",
-              editable: false,
-            },
-            { accessorKey: "name", header: "Name", editable: true },
-            {
-              accessorKey: "email",
-              header: "Email",
-              editable: true,
-            },
-            {
-              accessorKey: "phone",
-              header: "Phone Number",
-              editable: true,
+              enableEditing: false,
             },
             {
               accessorKey: "picture",
               header: "Picture",
-              editable: true,
+              Cell: ({ row }) => (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <label htmlFor={`file-upload-${row.index}`}>
+                    <Avatar
+                      alt="avatar"
+                      src={`http://localhost:8000${row.original.picture}`}
+                      sx={{ width: 40, height: 40 }}
+                    />
+                  </label>
+                  <input
+  id={`file-upload-${row.index}`}
+  type="file"
+  style={{ display: 'none' }}
+  onChange={(e) => {
+    console.log('Selected file:', e.target.files[0]);
+    handleUpdatePicture({ values: { id: row.original.id, picture: e.target.files[0] } })
+  }}
+/>
+                </Box>
+              )
             },
+            
+            
+            
+            {
+              accessorKey: "name",
+              header: "Name",
+            },
+            {
+              accessorKey: "email",
+              header: "Email",
+            },
+            {
+              accessorKey: "phone",
+              header: "Phone",
+            },
+            
+        
             {
               accessorKey: "course_id",
               header: "Class_id",
@@ -74,17 +100,18 @@ function Students() {
             {
               accessorKey: "created_at",
               header: "created-AT",
-              editable: false,
+              enableEditing: false,
             },
             {
               accessorKey: "updated_at",
               header: "updates-AT",
-              editable: false,
+              enableEditing: false,
+              
             },
           ];
 
           setColumns(formattedColumns);
-          setData(response.data.students);
+          setData(response.data.message);
         } else {
           console.error("Invalid response format");
           setData([]);
@@ -94,6 +121,61 @@ function Students() {
         console.error(error);
       });
   }, []);
+
+  
+
+// ...
+
+const handleUpdatePicture = (updatedRow) => {
+  const token = Cookies.get("auth");
+  const { ...updatedValues } = updatedRow.values;
+  const formData = new FormData();
+  formData.append("picture", updatedRow.values.picture);
+  console.log('formData:', formData);
+  Swal.fire({
+    title: "Are you sure you want to update this student's picture?",
+    showCancelButton: true,
+    confirmButtonText: "Yes, update it",
+    cancelButtonText: "No, cancel",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      axios
+        .post(
+          `http://localhost:8000/api/auth/student/${updatedRow.values.id}/picture`,{
+          
+          formData,
+          _method:'put',
+        },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          Swal.fire({
+            icon: "success",
+            title: "Update successful",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+          Swal.fire({
+            icon: "error",
+            title: "Update failed",
+            text: error.message,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+    }
+  });
+};
+
 
   // edit course
 
@@ -112,7 +194,7 @@ function Students() {
             `http://localhost:8000/api/auth/student/${updatedRow.values.id}`,
             {
               ...updatedValues,
-              _method: "PUT",
+              _method: "patch",
             },
             {
               headers: { Authorization: `Bearer ${token}` },
@@ -139,7 +221,9 @@ function Students() {
           });
       }
     });
-  };
+   
+}
+
 
   //  delete course
   const handleDelete = (id) => {
@@ -191,6 +275,7 @@ function Students() {
     console.log(tableInstanceRef.current.getState().sorting);
   };
 
+
   // add student
   const AddStudentForm = () => {
     const [student, setStudent] = useState({
@@ -203,9 +288,19 @@ function Students() {
     const [isDisabled, setIsDisabled] = useState(true); // new state variable
 
     const handleFormChange = (event) => {
-      const { name, value } = event.target;
-      setStudent((prevState) => ({ ...prevState, [name]: value }));
+      console.log(student)
+      const { name, value, files } = event.target;
+    
+      if (name === "picture") {
+        setStudent((prevState) => ({
+          ...prevState,
+          picture: files.length > 0 ? files[0] : "", // save the first file or an empty string
+        }));
+      } else {
+        setStudent((prevState) => ({ ...prevState, [name]: value }));
+      }
     };
+    
 
     useEffect(() => {
       // update isDisabled state whenever name or description changes
@@ -227,24 +322,28 @@ function Students() {
     const handleSubmit = (event) => {
       event.preventDefault();
       const token = Cookies.get("auth");
+    
+      const formData = new FormData();
+      formData.append("name", student.name);
+      formData.append("email", student.email);
+      formData.append("phone", student.phone);
+      formData.append("course_id", student.course_id);
+      formData.append("picture", student.picture);
+    
       axios
         .post(
           "http://localhost:8000/api/auth/student",
+          formData,
           {
-            name: student.name,
-            email: student.email,
-            phone: student.phone,
-            picture: student.picture,
-            course_id: student.course_id,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "multipart/form-data", // set the content type to multipart/form-data
+            },
           }
         )
         .then((response) => {
           console.log(response.data);
-          setData([...data, response.data]); // add the new course to the data state
-          // reset the form data state
+          setData([...data, response.data]);
           setStudent({
             name: "",
             email: "",
@@ -253,8 +352,12 @@ function Students() {
             course_id: "",
           });
           setOpen(false);
+        })
+        .catch((error) => {
+          console.log(error);
         });
     };
+    
 
     return (
       <Dialog open={open} onClose={() => setOpen(false)}>
@@ -263,7 +366,6 @@ function Students() {
           <TextField
             label="Name"
             name="name"
-            value={student.name}
             onChange={handleFormChange}
             fullWidth
             required
@@ -272,7 +374,7 @@ function Students() {
           <TextField
             label="Email"
             name="email"
-            value={student.email}
+            // value={student.email}
             onChange={handleFormChange}
             fullWidth
             required
@@ -281,38 +383,33 @@ function Students() {
           <TextField
             label="Phone"
             name="phone"
-            value={student.phone}
+            // value={student.phone}
             onChange={handleFormChange}
             fullWidth
             required
             sx={{ mb: 2 }}
           />
           <TextField
-            type={File}
-            label="Picture"
-            name="picture"
-            value={student.picture}
-            onChange={handleFormChange}
-            fullWidth
-            required
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="Class_id"
+            label="course_id"
             name="course_id"
-            value={student.course_id}
             onChange={handleFormChange}
             fullWidth
             required
             sx={{ mb: 2 }}
           />
-        </DialogContent>
+                    <TextField
+               type="file"
+  // label="Picture"
+  name="picture"
+  onChange={handleFormChange}
+  fullWidth
+  required
+  sx={{ mb: 2 }}
+/>
+</DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSubmit} disabled={isDisabled}>
-            Add
-          </Button>{" "}
-          {/* add disabled prop */}
+          <Button onClick={handleSubmit} disabled={isDisabled}>Add</Button> {/* add disabled prop */}
         </DialogActions>
       </Dialog>
     );
@@ -359,7 +456,7 @@ function Students() {
           }}
           editingMode="row"
           enableEditing
-          onEditingRowSave={handleUpdate}
+          onEditingRowSave={handleUpdate}    
         />
         <AddStudentForm />
       </div>
