@@ -421,7 +421,6 @@ const handleUpdatePicture = (updatedRow) => {
   return (
     <>
       <div className="table-container">
-        <Sidebar />
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
             variant="contained"

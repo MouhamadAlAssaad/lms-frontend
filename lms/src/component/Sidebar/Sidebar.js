@@ -59,14 +59,6 @@ function Sidebar(props) {
           Class
         </NavLink>
         <NavLink
-          className="sidebar-links"
-          to="/sections"
-          onClick={() => handleTabClick(3)}
-        >
-          <img className="sidebar_icons" src={sections} alt="Logo" />
-          Section
-        </NavLink>
-        <NavLink
           to="/attendance"
           className="sidebar-links"
           onClick={() => handleTabClick(4)}

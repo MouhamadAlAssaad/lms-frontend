@@ -1,13 +1,12 @@
-import Sidebar from '../../component/Sidebar/Sidebar';
-import Topbar from '../../topbar/topbar';
 import "./dashboard.css"
 import React, { useState, useEffect, useRef } from 'react';
-
-
+import Chart from "../../component/chart/chart"
+import Roundchart from "../../component/roundchart/rounchart"
 function Dashboard() {
   return (
-    <div>
-
+    <div className="dashboard">
+      <Roundchart/>
+      <Chart/>
 
       </div>
 

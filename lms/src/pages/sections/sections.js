@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import "./sections.css";
-
+import Dropdown from "../../component/dropdown/dropdown"
 import axios from "axios";
 import MaterialReactTable, {
 } from "material-react-table";
@@ -137,11 +137,6 @@ function Sections() {
     });
   };
 
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   capacity: "",
-  //   content: "",
-  // });
 
   const AddSectionForm = () => {
     const [section, setSection] = useState({
@@ -261,6 +256,8 @@ function Sections() {
   return (
     <>
       <div className="table-container">
+      <Dropdown labelName="Classes" options={["Section A", "Section B"]}/>
+
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
             variant="contained"
