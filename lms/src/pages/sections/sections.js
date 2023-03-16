@@ -2,8 +2,9 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import "./sections.css";
-import Dropdown from "../../component/dropdown/dropdown"
+// import  SelectButton from "../../component/dropdown/dropdown"
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 import MaterialReactTable, {
 } from "material-react-table";
 import Swal from "sweetalert2";
@@ -26,7 +27,10 @@ function Sections() {
   const [formattedColumns, setColumns] = useState([]);
   // const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
-
+  // const location = useLocation();
+  // const options = location.state ? location.state.options : [];
+  // const setOptions = location.state ? location.state.setOptions : () => {};
+  const [selectedSection, setSelectedSection] = useState("");
   useEffect(() => {
     const token = Cookies.get("auth");
     axios
@@ -252,11 +256,54 @@ function Sections() {
     //read the table state during an event from the table instance ref
     console.log(tableInstanceRef.current.getState().sorting);
   };
+ 
+  // const [selectedOption, setSelectedOption] = useState("");
 
+  // useEffect(() => {
+  //   const token = Cookies.get("auth");
+  //   axios
+  //     .get(`http://localhost:8000/api/auth/course/${courseId}`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setOptions(response.data.message.section);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [courseId]);
+
+
+//   const [options, setOptions] = useState([]);
+  
+// const get= (id) => {
+//     const token = Cookies.get("auth");
+//     axios
+//       .get(`http://localhost:8000/api/auth/course/${id}`, {
+//         headers: { Authorization: `Bearer ${token}` },
+//       })
+//       .then((response) => {
+//         console.log(response.data);
+//         setOptions(response.data.message.section);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }
+  
+ 
   return (
     <>
       <div className="table-container">
-      <Dropdown labelName="Classes" options={["Section A", "Section B"]}/>
+     
+      {/* <SelectButton
+        labelName="Sections"
+        // options={options?.map((option) => option.name)}
+        value={selectedSection}
+      
+      /> */}
+      
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button

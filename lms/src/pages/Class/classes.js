@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
+import Sections from "../sections/sections";
 import Cookies from "js-cookie";
 
 import "./Class.css";
@@ -255,6 +255,23 @@ function Classes() {
       </Dialog>
     );
   };
+  const [options, setOptions] = useState([]);
+  
+const get= (id) => {
+    const token = Cookies.get("auth");
+    axios
+      .get(`http://localhost:8000/api/auth/course/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        console.log(response.data);
+        setOptions(response.data.message.section);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+  
 
   return (
     <>
@@ -289,14 +306,21 @@ function Classes() {
                   <DeleteIcon fontSize="small" />
                 </IconButton>
                 Delete
-              </MenuItem>,
-              <MenuItem
-                sx={{ pl: "10px" }} // Add 20px of padding to the left side
-              >
-                <NavLink to="/sections">
-                  <span style={{ color: "black" }}>Section</span>
-                </NavLink>
-              </MenuItem>,
+
+                </MenuItem>,
+                 <MenuItem key="section">
+                <NavLink
+  to={{
+    pathname: "/sections",
+    state: { options: options, setOptions: setOptions }
+  }}
+  onClick={() => get(course.id)}
+>
+  <span style={{ color: "black" }}>Section</span>
+</NavLink>
+
+
+</MenuItem>
             ];
           }}
           editingMode="row"
