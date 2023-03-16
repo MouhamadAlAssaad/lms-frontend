@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import Sections from "../sections/sections";
-import Cookies from "js-cookie";
 
+import Sections from "../sections/sections";
+
+
+import Cookies from "js-cookie";
 import "./Class.css";
 import DeleteIcon from "@mui/icons-material/Delete";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
 import "./Class.css";
@@ -21,7 +24,6 @@ import {
   TextField,
   Tooltip,
 } from "@mui/material";
-
 import MaterialReactTable, {
   MaterialReactTableProps,
   MRT_Cell,
@@ -29,13 +31,16 @@ import MaterialReactTable, {
   MRT_Row,
 } from "material-react-table";
 import { NavLink } from "react-router-dom";
+import View from "./eye.svg";
 
 function Classes() {
+  const [test, setTest] = useState([]);
+  const [anId, setAnId] = useState(null);
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
-
+  
   useEffect(() => {
     const token = Cookies.get("auth");
 
@@ -168,6 +173,8 @@ function Classes() {
     });
   };
 
+ 
+
   const [rowSelection, setRowSelection] = useState({});
 
   useEffect(() => {
@@ -194,7 +201,6 @@ function Classes() {
     };
 
     useEffect(() => {
-      // update isDisabled state whenever name or description changes
       setIsDisabled(course.name === "" && course.description === "");
     }, [course.name, course.description]);
 
@@ -214,8 +220,7 @@ function Classes() {
         )
         .then((response) => {
           console.log(response.data);
-          setData([...data, response.data]); // add the new course to the data state
-          // reset the form data state
+          setData([...data, response.data]); 
           setCourse({
             name: "",
             description: "",
@@ -307,6 +312,7 @@ const get= (id) => {
                 </IconButton>
                 Delete
 
+
                 </MenuItem>,
                  <MenuItem key="section">
                 <NavLink
@@ -321,17 +327,34 @@ const get= (id) => {
 
 
 </MenuItem>
+
+              </MenuItem>,
+              <MenuItem
+                key={`get-${course.id}`}
+                sx={{ pl: "10px" }} // Add 20px of padding to the left side
+              >
+                <NavLink to={{pathname:"/sections"}}
+                state={{ id: course.id }}
+                className="classes_section_link">
+                  <span style={{ color: "black" }}>
+                    <IconButton size="small" sx={{ mr: 1.5 }}>
+                      <RemoveRedEyeIcon fontSize="small" />
+                    </IconButton>
+                    Section
+                  </span>
+                </NavLink>
+              </MenuItem>,
+
             ];
           }}
           editingMode="row"
           enableEditing
           onEditingRowSave={handleUpdate}
         />
-      
         <AddCourseForm />
       </div>
     </>
   );
 }
 
-export default Classes;
+export default Classes ;

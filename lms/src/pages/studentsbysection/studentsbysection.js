@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import Sidebar from "../../component/Sidebar/Sidebar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import Swal from "sweetalert2";
-import "./Student.css";
 import { Avatar } from "@mui/material";
 import {
   Box,
@@ -28,7 +26,7 @@ import MaterialReactTable, {
   MRT_Row,
 } from "material-react-table";
 
-function Students() {
+function Studentsbysection() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -437,7 +435,7 @@ function Students() {
               <MenuItem
                 key={`delete-${student.id}`}
                 onClick={() => handleDelete(student.id)}
-                sx={{ pl: "10px" }} // Add 20px of padding to the left side
+                sx={{ pl: "10px" }} 
               >
                 <IconButton size="small" sx={{ mr: 1.5 }}>
                   <DeleteIcon fontSize="small" />
@@ -445,7 +443,6 @@ function Students() {
                 Delete
               </MenuItem>,
 
-              //  <MenuItem key={`update-${student.id}`} onClick={() => handleUpdate(student)}>Edit</MenuItem>
             ];
           }}
           editingMode="row"
@@ -458,4 +455,4 @@ function Students() {
   );
 }
 
-export default Students;
+export default Studentsbysection;

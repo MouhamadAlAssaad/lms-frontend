@@ -9,13 +9,13 @@ import Login from "./pages/login/login_page.js";
 import Dashboard from "./pages/dashboard/dashboard";
 import Sidebar from "./component/Sidebar/Sidebar";
 import Topbar from "./topbar/topbar";
+
 import PrivateRoutes from './utils/PrivateRoute';
-import { useCookies } from 'react-cookie';
+import Studentsbysection from "./pages/studentsbysection/studentsbysection";
+
 
 function App() {
-  // const [cookies] = useCookies(['auth']);
-  // const isAuthenticated = !!cookies.auth;
-  // console.log(cookies.auth)
+ 
 
   return (
     <div className="App">
@@ -26,6 +26,7 @@ function App() {
       <div className="App-container">
         <Routes>
           <Route path="/" element={<Login />} />
+
           <Route element={<PrivateRoutes/>}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/admins" element={<Admins />} />
@@ -34,6 +35,15 @@ function App() {
             <Route path="/sections" element={<Sections />} />
             <Route path="/attendance" element={<Attendance />} />
           </Route>
+
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admins" element={<Admins />} />
+          <Route path="/students" element={<Students />} />
+          <Route path="/classes" element={<Classes />} />
+          <Route path="/sections" element={<Sections />} />
+          <Route path="/attendance" element={<Attendance />} />
+          <Route path="/studentsbysection" element={<Studentsbysection/>} />
+
         </Routes>
       </div>
     </div>
