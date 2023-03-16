@@ -2,11 +2,19 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import "./sections.css";
+
+// import  SelectButton from "../../component/dropdown/dropdown"
+import axios from "axios";
+import { useLocation } from "react-router-dom";
+import MaterialReactTable, {
+} from "material-react-table";
+
 import Dropdown from "../../component/dropdown/dropdown";
 import axios from "axios";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { NavLink } from "react-router-dom";
 import MaterialReactTable from "material-react-table";
+
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
 import {
@@ -28,8 +36,15 @@ function Sections(props) {
   const [formattedColumns, setColumns] = useState([]);
   // const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
+
+  // const location = useLocation();
+  // const options = location.state ? location.state.options : [];
+  // const setOptions = location.state ? location.state.setOptions : () => {};
+  const [selectedSection, setSelectedSection] = useState("");
+=======
   const [sectionss, setSectionss] = useState([]);
   let location = useLocation();
+
 
   useEffect(() => {
     handleGet(location.state.id);
@@ -269,15 +284,65 @@ function Sections(props) {
   const someEventHandler = () => {
     console.log(tableInstanceRef.current.getState().sorting);
   };
+
+ 
+  // const [selectedOption, setSelectedOption] = useState("");
+
+  // useEffect(() => {
+  //   const token = Cookies.get("auth");
+  //   axios
+  //     .get(`http://localhost:8000/api/auth/course/${courseId}`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setOptions(response.data.message.section);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [courseId]);
+
+=======
   const [options, setOptions] = useState([]);
 
+
+//   const [options, setOptions] = useState([]);
+  
+// const get= (id) => {
+//     const token = Cookies.get("auth");
+//     axios
+//       .get(`http://localhost:8000/api/auth/course/${id}`, {
+//         headers: { Authorization: `Bearer ${token}` },
+//       })
+//       .then((response) => {
+//         console.log(response.data);
+//         setOptions(response.data.message.section);
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }
+  
+ 
   return (
     <>
       <div className="table-container">
+
+     
+      {/* <SelectButton
+        labelName="Sections"
+        // options={options?.map((option) => option.name)}
+        value={selectedSection}
+      
+      /> */}
+      
+=======
         {/* <Dropdown labelName="Sections" options={sectionss.map((e) => {
           console.log(e.name)
           return  e.name
       })}/> */}
+
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button

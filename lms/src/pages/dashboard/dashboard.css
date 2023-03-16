@@ -2,3 +2,8 @@
 width: 94%;
 margin: 50px auto;
 }
+.content{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
