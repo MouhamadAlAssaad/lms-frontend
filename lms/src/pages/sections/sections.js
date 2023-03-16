@@ -2,11 +2,13 @@ import React from "react";
 import { useState, useEffect, useRef } from "react";
 import Cookies from "js-cookie";
 import "./sections.css";
-import Dropdown from "../../component/dropdown/dropdown"
+import Dropdown from "../../component/dropdown/dropdown";
 import axios from "axios";
-import MaterialReactTable, {
-} from "material-react-table";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import { NavLink } from "react-router-dom";
+import MaterialReactTable from "material-react-table";
 import Swal from "sweetalert2";
+import { useLocation } from "react-router-dom";
 import {
   Box,
   Button,
@@ -21,39 +23,56 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
-function Sections() {
+function Sections(props) {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
   // const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
+  const [sectionss, setSectionss] = useState([]);
+  let location = useLocation();
 
   useEffect(() => {
+    handleGet(location.state.id);
+  }, []);
+
+  const handleGet = (id) => {
     const token = Cookies.get("auth");
+
     axios
-      .get("http://localhost:8000/api/auth/section", {
+      .get(`http://localhost:8000/api/auth/section/course/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
-        console.log(response.data); // log the data variable
-        if (response.data && Array.isArray(response.data.sections)) {
-          const formattedColumns = [
-            { accessorKey: "id", header: "ID", type: "numeric" , enableEditing: false,},
+        console.log(response.data);
+        if (response.data) {
+          setColumns([
+            {
+              accessorKey: "id",
+              header: "ID",
+              type: "numeric",
+              enableEditing: false,
+            },
             { accessorKey: "name", header: "Name" },
             { accessorKey: "capacity", header: "Capacity" },
             { accessorKey: "content", header: "content" },
-            { accessorKey: "created_at", header: "created-AT", enableEditing: false, },
-            { accessorKey: "updated_at", header: "updates-AT", enableEditing: false, },
-          ];
-
-          setColumns(formattedColumns);
-          setData(response.data.sections);
-        } else {
-          console.error("Invalid response format");
-          setData([]);
+            {
+              accessorKey: "created_at",
+              header: "created-AT",
+              enableEditing: false,
+            },
+            {
+              accessorKey: "updated_at",
+              header: "updates-AT",
+              enableEditing: false,
+            },
+          ]);
         }
+        setSectionss(response.data.message);
       })
-      .catch((error) => console.error(error));
-  }, []);
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const handleUpdate = (updatedRow) => {
     const token = Cookies.get("auth");
@@ -137,15 +156,16 @@ function Sections() {
     });
   };
 
-
+  console.log(sectionss);
+  console.log(data);
   const AddSectionForm = () => {
     const [section, setSection] = useState({
       name: "",
       content: "",
       capacity: "",
-      course_id:""
+      course_id: "",
     });
-    const [isDisabled, setIsDisabled] = useState(true); 
+    const [isDisabled, setIsDisabled] = useState(true);
     const handleFormChange = (event) => {
       const { name, value } = event.target;
       setSection((prevState) => ({ ...prevState, [name]: value }));
@@ -153,9 +173,12 @@ function Sections() {
 
     useEffect(() => {
       setIsDisabled(
-        section.name === "" && section.content === "" && section.capacity === "" && section.course_id ===""
+        section.name === "" &&
+          section.content === "" &&
+          section.capacity === "" &&
+          section.course_id === ""
       );
-    }, [section.name,  section.content, section.capacity, section.course_id]);
+    }, [section.name, section.content, section.capacity, section.course_id]);
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -180,7 +203,7 @@ function Sections() {
             name: "",
             content: "",
             capacity: "",
-            course_id:""
+            course_id: "",
           });
           setOpen(false);
         });
@@ -199,7 +222,7 @@ function Sections() {
             required
             sx={{ mb: 2 }}
           />
-           <TextField
+          <TextField
             label="Content"
             name="content"
             value={section.content}
@@ -217,7 +240,7 @@ function Sections() {
             required
             sx={{ mb: 2 }}
           />
-           <TextField
+          <TextField
             label="course_id"
             name="course_id"
             value={section.course_id}
@@ -226,14 +249,12 @@ function Sections() {
             required
             sx={{ mb: 2 }}
           />
-         
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button onClick={handleSubmit} disabled={isDisabled}>
             Add
           </Button>{" "}
-          {/* add disabled prop */}
         </DialogActions>
       </Dialog>
     );
@@ -241,22 +262,22 @@ function Sections() {
 
   const [rowSelection, setRowSelection] = useState({});
 
-  useEffect(() => {
-    //do something when the row selection changes
-  }, [rowSelection]);
+  useEffect(() => {}, [rowSelection]);
 
-  //Or, optionally, you can get a reference to the underlying table instance
   const tableInstanceRef = useRef(null);
 
   const someEventHandler = () => {
-    //read the table state during an event from the table instance ref
     console.log(tableInstanceRef.current.getState().sorting);
   };
+  const [options, setOptions] = useState([]);
 
   return (
     <>
       <div className="table-container">
-      <Dropdown labelName="Classes" options={["Section A", "Section B"]}/>
+        {/* <Dropdown labelName="Sections" options={sectionss.map((e) => {
+          console.log(e.name)
+          return  e.name
+      })}/> */}
 
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
@@ -271,7 +292,7 @@ function Sections() {
         </Box>
         <MaterialReactTable
           columns={formattedColumns}
-          data={data}
+          data={sectionss}
           enableColumnOrdering
           enablePagination={true}
           tableInstanceRef={tableInstanceRef}
@@ -289,19 +310,34 @@ function Sections() {
                 </IconButton>
                 Delete
               </MenuItem>,
+              <MenuItem
+                sx={{ pl: "10px" }} // Add 20px of padding to the left side
+              >
+                <NavLink
+                
+                  to={{ pathname: "/Studentsbysection" }}
+                  state={{ id: section.id }}
+                  className="sections_students_link"
+                >
+                  <span style={{ color: "black" }}>
+                    <IconButton size="small" sx={{ mr: 1.5 }}>
+                      <RemoveRedEyeIcon fontSize="small" />
+                    </IconButton>
+                    Students
+                  </span>
+                </NavLink>
+              </MenuItem>,
             ];
           }}
           editingMode="row"
           enableEditing
-          onEditingRowSave={handleUpdate}                
-
-
-          
+          onEditingRowSave={handleUpdate}
         />
+
         <AddSectionForm />
       </div>
     </>
   );
-};
+}
 
 export default Sections;
