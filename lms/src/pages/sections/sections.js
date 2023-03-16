@@ -31,12 +31,15 @@ function Sections(props) {
   const [sectionss, setSectionss] = useState([]);
   let location = useLocation();
 
+      const dataUser = JSON.parse(Cookies.get("auth"));
+      const token = dataUser.access_token;
+
+
   useEffect(() => {
     handleGet(location.state.id);
   }, []);
 
   const handleGet = (id) => {
-    const token = Cookies.get("auth");
 
     axios
       .get(`http://localhost:8000/api/auth/section/course/${id}`, {
@@ -75,7 +78,6 @@ function Sections(props) {
   };
 
   const handleUpdate = (updatedRow) => {
-    const token = Cookies.get("auth");
     const { ...updatedValues } = updatedRow.values;
 
     Swal.fire({
@@ -120,7 +122,6 @@ function Sections(props) {
   };
 
   const handleDelete = (id) => {
-    const token = Cookies.get("auth");
 
     Swal.fire({
       title: "Are you sure you want to delete this section?",
@@ -182,7 +183,6 @@ function Sections(props) {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const token = Cookies.get("auth");
       axios
         .post(
           "http://localhost:8000/api/auth/section",

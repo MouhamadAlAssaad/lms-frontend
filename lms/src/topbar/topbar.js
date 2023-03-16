@@ -2,10 +2,11 @@ import  "./topbar.css";
 import { HiOutlineLogout } from "react-icons/hi";
 import profile from "./adminprofile.png";
 import { useLocation } from "react-router-dom";
-
+import Cookies from "js-cookie";
 
 function Topbar() {
-
+    const dataUser = JSON.parse(Cookies.get("auth"));
+    const name = dataUser.user.name;
   const style = {
     backgroundImage: `url(${process.env.PUBLIC_URL + "/Assets/people.png"})`,
   };
@@ -13,17 +14,8 @@ function Topbar() {
 
   return (
     <div className="topbar">
-      <div>
-      
-      </div>
-      <div className="topbar-admin">
-        <div>
-            <img className="topbarimg"  src={profile}/>
-        </div>
-        <div className="topbar-end">
-          <h4>Mouhamad Al Assaad</h4>
-          <HiOutlineLogout size={30} className="topbar-logOut" />
-        </div>
+        <div className="topbar-admin">
+          <h4>{name}</h4>
       </div>
     </div>
   );

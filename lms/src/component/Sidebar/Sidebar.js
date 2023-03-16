@@ -9,10 +9,11 @@ import report from "./icons/report.png";
 import sections from "./icons/sections.png";
 import student from "./icons/student.png";
 import user from "./icons/user.png";
-
+import Cookies from "js-cookie";
 
 function Sidebar(props) {
-  
+  const dataUser = JSON.parse(Cookies.get("auth"));
+  const isSuper = dataUser.user.is_super;
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
   
@@ -33,7 +34,7 @@ function Sidebar(props) {
           <img className="sidebar_icons" src={report} alt="Logo" />
           Dashboard
         </NavLink>
-        <NavLink
+        {isSuper? <NavLink
           to="/admins"
           className="sidebar-links"
           onClick={() => handleTabClick(1)}
@@ -41,7 +42,8 @@ function Sidebar(props) {
           {" "}
           <img className="sidebar_icons" src={user} alt="Logo" />
           Admin
-        </NavLink>
+        </NavLink>:null}
+
         <NavLink
           to="/students"
           className="sidebar-links"
