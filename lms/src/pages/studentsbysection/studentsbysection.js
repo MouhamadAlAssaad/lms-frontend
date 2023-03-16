@@ -25,106 +25,211 @@ import MaterialReactTable, {
   MRT_ColumnDef,
   MRT_Row,
 } from "material-react-table";
+import { useLocation } from "react-router-dom";
+
+
+
 
 function Studentsbysection() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
+  let location = useLocation();
+  const [stud, setStud] = useState([]);
 
+
+//   useEffect(() => {
+//     const token = Cookies.get("auth");
+
+//     axios
+//       .get("http://localhost:8000/api/auth/student", {
+//         headers: { Authorization: `Bearer ${token}` },
+//       })
+//       .then((response) => {
+//         console.log(response.data);
+//         if (response.data && Array.isArray(response.data.message)) {
+//           const formattedColumns = [
+//             {
+//               accessorKey: "id",
+//               header: "ID",
+//               type: "numeric",
+//               enableEditing: false,
+//             },
+//             {
+//               accessorKey: "picture",
+//               header: "Picture",
+//               enableEditing: false,
+//               Cell: ({ row }) => (
+//                 <Box
+//                   sx={{ display: "flex", alignItems: "center", gap: "1rem" }}
+//                 >
+//                   <label htmlFor={`file-upload-${row.index}`}>
+//                     <Avatar
+//                       alt="avatar"
+//                       src={`http://localhost:8000${row.original.picture}`}
+//                       sx={{ width: 40, height: 40 }}
+//                     />
+//                   </label>
+//                   <input
+//                     id={`file-upload-${row.index}`}
+//                     type="file"
+//                     style={{ display: "none" }}
+//                     onChange={(e) => {
+//                       console.log("Selected file:", e.target.files[0]);
+//                       handleUpdatePicture({
+//                         values: {
+//                           id: row.original.id,
+//                           picture: e.target.files[0],
+//                         },
+//                       });
+//                     }}
+//                   />
+//                 </Box>
+//               ),
+//             },
+
+//             {
+//               accessorKey: "name",
+//               header: "Name",
+//             },
+//             {
+//               accessorKey: "email",
+//               header: "Email",
+//             },
+//             {
+//               accessorKey: "phone",
+//               header: "Phone",
+//             },
+
+//             {
+//               accessorKey: "course_id",
+//               header: "Class_id",
+//               editable: true,
+//             },
+//             {
+//               accessorKey: "created_at",
+//               header: "created-AT",
+//               enableEditing: false,
+//             },
+//             {
+//               accessorKey: "updated_at",
+//               header: "updates-AT",
+//               enableEditing: false,
+//             },
+//           ];
+
+//           setColumns(formattedColumns);
+//           setData(response.data.message);
+//         } else {
+//           console.error("Invalid response format");
+//           setData([]);
+//         }
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }, []);
+
+  // ...
   useEffect(() => {
+    handleGet(location.state.id);
+  }, []);
+
+  const handleGet = (id) => {
     const token = Cookies.get("auth");
 
     axios
-      .get("http://localhost:8000/api/auth/student", {
+      .get(`http://localhost:8000/api/auth/students/section/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         console.log(response.data);
-        if (response.data && Array.isArray(response.data.message)) {
-          const formattedColumns = [
+        if (response.data.message) {
+          setColumns([
             {
-              accessorKey: "id",
-              header: "ID",
-              type: "numeric",
-              enableEditing: false,
-            },
-            {
-              accessorKey: "picture",
-              header: "Picture",
-              enableEditing: false,
-              Cell: ({ row }) => (
-                <Box
-                  sx={{ display: "flex", alignItems: "center", gap: "1rem" }}
-                >
-                  <label htmlFor={`file-upload-${row.index}`}>
-                    <Avatar
-                      alt="avatar"
-                      src={`http://localhost:8000${row.original.picture}`}
-                      sx={{ width: 40, height: 40 }}
+                accessorKey: "id",
+                header: "ID",
+                type: "numeric",
+                enableEditing: false,
+              },
+              {
+                accessorKey: "picture",
+                header: "Picture",
+                enableEditing: false,
+                Cell: ({ row }) => (
+                  <Box
+                    sx={{ display: "flex", alignItems: "center", gap: "1rem" }}
+                  >
+                    <label htmlFor={`file-upload-${row.index}`}>
+                      <Avatar
+                        alt="avatar"
+                        src={`http://localhost:8000${row.original.picture}`}
+                        sx={{ width: 40, height: 40 }}
+                      />
+                    </label>
+                    <input
+                      id={`file-upload-${row.index}`}
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={(e) => {
+                        console.log("Selected file:", e.target.files[0]);
+                        handleUpdatePicture({
+                          values: {
+                            id: row.original.id,
+                            picture: e.target.files[0],
+                          },
+                        });
+                      }}
                     />
-                  </label>
-                  <input
-                    id={`file-upload-${row.index}`}
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={(e) => {
-                      console.log("Selected file:", e.target.files[0]);
-                      handleUpdatePicture({
-                        values: {
-                          id: row.original.id,
-                          picture: e.target.files[0],
-                        },
-                      });
-                    }}
-                  />
-                </Box>
-              ),
-            },
-
-            {
-              accessorKey: "name",
-              header: "Name",
-            },
-            {
-              accessorKey: "email",
-              header: "Email",
-            },
-            {
-              accessorKey: "phone",
-              header: "Phone",
-            },
-
-            {
-              accessorKey: "course_id",
-              header: "Class_id",
-              editable: true,
-            },
-            {
-              accessorKey: "created_at",
-              header: "created-AT",
-              enableEditing: false,
-            },
-            {
-              accessorKey: "updated_at",
-              header: "updates-AT",
-              enableEditing: false,
-            },
-          ];
-
-          setColumns(formattedColumns);
-          setData(response.data.message);
-        } else {
-          console.error("Invalid response format");
-          setData([]);
+                  </Box>
+                ),
+              },
+  
+              {
+                accessorKey: "name",
+                header: "Name",
+              },
+              {
+                accessorKey: "email",
+                header: "Email",
+              },
+              {
+                accessorKey: "phone",
+                header: "Phone",
+              },
+  
+            //   {
+            //     accessorKey: "course_id",
+            //     header: "Class_id",
+            //     editable: true,
+            //   },
+              {
+                accessorKey: "created_at",
+                header: "created-AT",
+                enableEditing: false,
+              },
+              {
+                accessorKey: "updated_at",
+                header: "updates-AT",
+                enableEditing: false,
+              },
+          ]);
         }
+        console.log(setStud)
+        // console.log(response.data.message)
+        setStud(response.data.message);
       })
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
 
-  // ...
+
+
+
+
+
 
   const handleUpdatePicture = (updatedRow) => {
     const token = Cookies.get("auth");
@@ -424,7 +529,7 @@ function Studentsbysection() {
         </Box>
         <MaterialReactTable
           columns={formattedColumns}
-          data={data}
+          data={stud}
           enableColumnOrdering
           enablePagination={true}
           tableInstanceRef={tableInstanceRef}
@@ -435,14 +540,13 @@ function Studentsbysection() {
               <MenuItem
                 key={`delete-${student.id}`}
                 onClick={() => handleDelete(student.id)}
-                sx={{ pl: "10px" }} 
+                sx={{ pl: "10px" }} // Add 20px of padding to the left side
               >
                 <IconButton size="small" sx={{ mr: 1.5 }}>
                   <DeleteIcon fontSize="small" />
                 </IconButton>
                 Delete
               </MenuItem>,
-
             ];
           }}
           editingMode="row"
