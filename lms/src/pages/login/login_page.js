@@ -32,12 +32,12 @@ const Login = () => {
 
       console.log("Login response:", data);
       if (data.access_token) {
-        setCookie("auth", data.access_token);
+        setCookie("auth", JSON.stringify(data));
         setLoggedIn(true);
         navigate('/dashboard');
       }
     })
-    .catch(error => console.error(error));
+    .catch(error => console.error(error));  
   
   }
 

@@ -38,8 +38,8 @@ function Classes() {
   const [open, setOpen] = useState(false);
   
   useEffect(() => {
-    const token = Cookies.get("auth");
-
+    const dataUser = json.pares( Cookies.get("auth"));
+    const token    = 
     axios
       .get("http://localhost:8000/api/auth/course", {
         headers: { Authorization: `Bearer ${token}` },
