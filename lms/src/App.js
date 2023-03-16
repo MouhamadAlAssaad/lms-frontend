@@ -9,6 +9,7 @@ import Login from "./pages/login/login_page.js";
 import Dashboard from "./pages/dashboard/dashboard";
 import Sidebar from "./component/Sidebar/Sidebar";
 import Topbar from "./topbar/topbar";
+import Studentsbysection from "./pages/studentsbysection/studentsbysection";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/classes" element={<Classes />} />
           <Route path="/sections" element={<Sections />} />
           <Route path="/attendance" element={<Attendance />} />
+          <Route path="/studentsbysection" element={<Studentsbysection/>} />
         </Routes>
       </div>
     </div>
