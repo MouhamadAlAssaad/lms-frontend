@@ -9,14 +9,13 @@ import { useLocation } from "react-router-dom";
 import MaterialReactTable, {
 } from "material-react-table";
 
-import Dropdown from "../../component/dropdown/dropdown";
-import axios from "axios";
+// import Dropdown from "../../component/dropdown/dropdown";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import { NavLink } from "react-router-dom";
-import MaterialReactTable from "material-react-table";
+
 
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
+
 import {
   Box,
   Button,
@@ -41,7 +40,7 @@ function Sections(props) {
   // const options = location.state ? location.state.options : [];
   // const setOptions = location.state ? location.state.setOptions : () => {};
   const [selectedSection, setSelectedSection] = useState("");
-=======
+
   const [sectionss, setSectionss] = useState([]);
   let location = useLocation();
 
@@ -303,7 +302,7 @@ function Sections(props) {
   //     });
   // }, [courseId]);
 
-=======
+
   const [options, setOptions] = useState([]);
 
 
@@ -337,7 +336,7 @@ function Sections(props) {
       
       /> */}
       
-=======
+
         {/* <Dropdown labelName="Sections" options={sectionss.map((e) => {
           console.log(e.name)
           return  e.name

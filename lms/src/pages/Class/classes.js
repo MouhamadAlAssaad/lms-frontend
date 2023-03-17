@@ -328,9 +328,9 @@ const get= (id) => {
 </NavLink>
 
 
-</MenuItem>
+</MenuItem>,
 
-              </MenuItem>,
+      
               <MenuItem
                 key={`get-${course.id}`}
                 sx={{ pl: "10px" }} // Add 20px of padding to the left side

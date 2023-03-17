@@ -9,17 +9,16 @@ import report from "./icons/report.png";
 import sections from "./icons/sections.png";
 import student from "./icons/student.png";
 import user from "./icons/user.png";
-
+import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
+
+
+
+
 
 function Sidebar(props) {
   const dataUser = JSON.parse(Cookies.get("auth"));
   const isSuper = dataUser.user.is_super;
-
-import { useCookies } from "react-cookie";
-
-function Sidebar(props) {
-
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
