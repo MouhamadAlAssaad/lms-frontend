@@ -34,7 +34,7 @@ import MaterialReactTable, {
 } from 'material-react-table';
 
 
-function Classes() {
+function Attendance() {
   const [data, setData] = useState([]);
   const [formattedColumns, setColumns] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -298,5 +298,5 @@ function Classes() {
 }
 
      
-export default Classes;
+export default Attendance;
  

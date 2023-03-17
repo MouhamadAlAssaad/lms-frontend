@@ -5,8 +5,8 @@ import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Topbar() {
-    const dataUser = JSON.parse(Cookies.get("auth"));
-    const name = dataUser.user.name;
+      const dataUser = JSON.parse(Cookies.get("auth"));
+      const name = dataUser.user.name;
   const style = {
     backgroundImage: `url(${process.env.PUBLIC_URL + "/Assets/people.png"})`,
   };

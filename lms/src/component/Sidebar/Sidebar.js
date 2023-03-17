@@ -17,7 +17,13 @@ import Cookies from "js-cookie";
 
 
 function Sidebar(props) {
-z
+
+
+
+      const dataUser = JSON.parse(Cookies.get("auth"));
+      const token = dataUser.access_token;
+      const isSuper = dataUser.user.is_super;
+
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
@@ -79,7 +85,7 @@ z
         </NavLink>
       </nav>
       <h3>
-        <Link to="/" onClick={logout} className="logout ">
+        <Link to="/" onClick={props.logout} className="logout ">
         <img className="sidebar_icons" src={out}  alt="Logo" />
           Logout
         </Link>
