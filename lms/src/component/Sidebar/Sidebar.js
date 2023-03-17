@@ -17,8 +17,7 @@ import Cookies from "js-cookie";
 
 
 function Sidebar(props) {
-  const dataUser = JSON.parse(Cookies.get("auth"));
-  const isSuper = dataUser.user.is_super;
+z
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
   const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
