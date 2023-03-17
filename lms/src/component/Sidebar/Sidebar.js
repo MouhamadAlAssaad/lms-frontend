@@ -1,27 +1,38 @@
 import { useState } from "react";
-import { useLocation, NavLink,Link } from "react-router-dom";
+import { useLocation, NavLink, Link } from "react-router-dom";
 import "./Sidebar.css";
 import logo from "./lms.svg";
 import calender from "./icons/calendar.png";
-import logout from "./icons/logout.png";
+import out from "./icons/logout.png";
 import presentation from "./icons/presentation.png";
 import report from "./icons/report.png";
 import sections from "./icons/sections.png";
 import student from "./icons/student.png";
 import user from "./icons/user.png";
+
 import Cookies from "js-cookie";
 
 function Sidebar(props) {
   const dataUser = JSON.parse(Cookies.get("auth"));
   const isSuper = dataUser.user.is_super;
+
+import { useCookies } from "react-cookie";
+
+function Sidebar(props) {
+
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
-  
+  const [cookies, setCookie, removeCookie] = useCookies(["auth"]);
+
   const handleTabClick = (tabNumber) => {
     setActiveTab(tabNumber);
   };
-  
-  if (useLocation().pathname == "/") return null; 
+
+  const logout = () => {
+    removeCookie("auth");
+  };
+
+  if (useLocation().pathname == "/") return null;
   return (
     <div className="sidebar">
       <img className="sidebar_image" src={logo} alt="Logo" />
@@ -70,8 +81,8 @@ function Sidebar(props) {
         </NavLink>
       </nav>
       <h3>
-        <Link to="/" onClick={props.logout} className="logout ">
-          <img className="sidebar_icons" src={logout} alt="Logo" />
+        <Link to="/" onClick={logout} className="logout ">
+        <img className="sidebar_icons" src={out}  alt="Logo" />
           Logout
         </Link>
       </h3>

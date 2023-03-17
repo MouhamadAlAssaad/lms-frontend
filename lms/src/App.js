@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import "./App.css";
 import Admins from "./pages/admin/admins";
 import Students from "./pages/students/students";
@@ -9,9 +9,14 @@ import Login from "./pages/login/login_page.js";
 import Dashboard from "./pages/dashboard/dashboard";
 import Sidebar from "./component/Sidebar/Sidebar";
 import Topbar from "./topbar/topbar";
+
+import PrivateRoutes from './utils/PrivateRoute';
 import Studentsbysection from "./pages/studentsbysection/studentsbysection";
 
+
 function App() {
+ 
+
   return (
     <div className="App">
       <div className="App-sidebar">
@@ -21,6 +26,16 @@ function App() {
       <div className="App-container">
         <Routes>
           <Route path="/" element={<Login />} />
+
+          <Route element={<PrivateRoutes/>}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admins" element={<Admins />} />
+            <Route path="/students" element={<Students />} />
+            <Route path="/classes" element={<Classes />} />
+            <Route path="/sections" element={<Sections />} />
+            <Route path="/attendance" element={<Attendance />} />
+          </Route>
+
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admins" element={<Admins />} />
           <Route path="/students" element={<Students />} />
@@ -28,6 +43,7 @@ function App() {
           <Route path="/sections" element={<Sections />} />
           <Route path="/attendance" element={<Attendance />} />
           <Route path="/studentsbysection" element={<Studentsbysection/>} />
+
         </Routes>
       </div>
     </div>
