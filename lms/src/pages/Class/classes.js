@@ -40,9 +40,13 @@ function Classes() {
   const [formattedColumns, setColumns] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
-  
+
+
+      const dataUser = JSON.parse(Cookies.get("auth"));
+      const token = dataUser.access_token;
+
+
   useEffect(() => {
-    const token = Cookies.get("auth");
 
     axios
       .get("http://localhost:8000/api/auth/course", {
@@ -91,7 +95,7 @@ function Classes() {
   // edit course
 
   const handleUpdate = (updatedRow) => {
-    const token = Cookies.get("auth");
+
     const { ...updatedValues } = updatedRow.values;
 
     Swal.fire({
@@ -137,7 +141,6 @@ function Classes() {
 
   //  delete course
   const handleDelete = (id) => {
-    const token = Cookies.get("auth");
 
     Swal.fire({
       title: "Are you sure you want to delete this course?",
@@ -206,7 +209,6 @@ function Classes() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const token = Cookies.get("auth");
       axios
         .post(
           "http://localhost:8000/api/auth/course",

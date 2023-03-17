@@ -1,15 +1,14 @@
-.topbar {
-    margin-left: 18rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+ .topbar {
+
+
     margin-top: 15px;
     position: absolute;
-    top: 0;
-    right: 0;
-}
+    top: -20px;
+    right: 50%;
 
+    
+}
+/*
 .topbar-admin {
     display: flex;
     align-items: center;
@@ -36,4 +35,6 @@
 .topbarimg {
     width: 36px;
     height: 36px;
-}
+} */
+
+

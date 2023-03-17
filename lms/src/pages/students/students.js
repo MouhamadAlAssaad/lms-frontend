@@ -34,8 +34,11 @@ function Students() {
   const [selectedRow, setSelectedRow] = useState(null);
   const [open, setOpen] = useState(false);
 
+      const dataUser = JSON.parse(Cookies.get("auth"));
+      const token = dataUser.access_token;
+
   useEffect(() => {
-    const token = Cookies.get("auth");
+
 
     axios
       .get("http://localhost:8000/api/auth/student", {
@@ -129,7 +132,6 @@ function Students() {
   // ...
 
   const handleUpdatePicture = (updatedRow) => {
-    const token = Cookies.get("auth");
     const { ...updatedValues } = updatedRow.values;
     const formData = new FormData();
     formData.append("picture", updatedRow.values.picture);
@@ -181,7 +183,6 @@ function Students() {
   // edit course
 
   const handleUpdate = (updatedRow) => {
-    const token = Cookies.get("auth");
     const { ...updatedValues } = updatedRow.values;
     Swal.fire({
       title: "Are you sure you want to edit this student?",
@@ -226,7 +227,6 @@ function Students() {
 
   //  delete course
   const handleDelete = (id) => {
-    const token = Cookies.get("auth");
 
     Swal.fire({
       title: "Are you sure you want to delete this student?",
@@ -318,7 +318,6 @@ function Students() {
 
     const handleSubmit = (event) => {
       event.preventDefault();
-      const token = Cookies.get("auth");
 
       const formData = new FormData();
       formData.append("name", student.name);
