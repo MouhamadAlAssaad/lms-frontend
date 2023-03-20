@@ -5,8 +5,21 @@ import { useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 
 function Topbar() {
-      const dataUser = JSON.parse(Cookies.get("auth"));
-      const name = dataUser.user.name;
+  const authCookie = Cookies.get("auth");
+  let isSuper = false; 
+  let name = "";
+  if (!authCookie) {
+  
+  } else {
+    try {
+      const dataUser = JSON.parse(authCookie);
+      const token = dataUser.access_token;
+      name = dataUser.user.name;
+    } catch (error) {
+      console.error("Invalid auth cookie:", authCookie);
+    }
+  }
+     
   const style = {
     backgroundImage: `url(${process.env.PUBLIC_URL + "/Assets/people.png"})`,
   };

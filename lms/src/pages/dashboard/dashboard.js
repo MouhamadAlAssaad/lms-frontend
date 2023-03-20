@@ -6,12 +6,12 @@ import Chart from "../../component/chart/chart"
 import Roundchart from "../../component/roundchart/rounchart";
 import { StudentCard, AdminCard } from "../../component/Card/card"
 function Dashboard() {
- 
+  const dataUser = JSON.parse(Cookies.get("auth"));
+      const token = dataUser.access_token;
     const [data, setData] = useState([]);
     const [students, setStudents] = useState([]);
  const [attendanceData,setattendanceData]=useState([]);
     useEffect(() => {
-      const token = Cookies.get("auth");
       axios
         .get("http://localhost:8000/api/auth/attendance", {
           headers: { Authorization: `Bearer ${token}` },
@@ -35,7 +35,6 @@ function Dashboard() {
     const percentLate = Math.round((numLate / total) * 100);
    
     useEffect(() => {
-      const token = Cookies.get("auth");
       axios.get('http://localhost:8000/api/auth/student',{
         headers: { Authorization: `Bearer ${token}` },
       }) // replace with your actual API endpoint
@@ -50,7 +49,6 @@ function Dashboard() {
     const numStudents = students.length;
     const [Admins, setAdmins] = useState([]);
     useEffect(() => {
-      const token = Cookies.get("auth");
       axios.get('http://localhost:8000/api/auth/users',{
         headers: { Authorization: `Bearer ${token}` },
       }) 

@@ -17,12 +17,22 @@ import Cookies from "js-cookie";
 
 
 function Sidebar(props) {
-
-
-
-      const dataUser = JSON.parse(Cookies.get("auth"));
+  const authCookie = Cookies.get("auth");
+  let isSuper = false; 
+  if (!authCookie) {
+  
+  } else {
+    try {
+      const dataUser = JSON.parse(authCookie);
       const token = dataUser.access_token;
-      const isSuper = dataUser.user.is_super;
+      isSuper = dataUser.user.is_super; // assign value
+      // rest of the code
+    } catch (error) {
+      console.error("Invalid auth cookie:", authCookie);
+    }
+  }
+  // rest of the code
+
 
   const [activeTab, setActiveTab] = useState(1);
   const location = useLocation();
@@ -85,7 +95,7 @@ function Sidebar(props) {
         </NavLink>
       </nav>
       <h3>
-        <Link to="/" onClick={props.logout} className="logout ">
+        <Link to="/" onClick={logout} className="logout ">
         <img className="sidebar_icons" src={out}  alt="Logo" />
           Logout
         </Link>

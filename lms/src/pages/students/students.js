@@ -282,6 +282,7 @@ function Students() {
       phone: "",
       picture: "",
       course_id: "",
+      section_id:"",
     });
     const [isDisabled, setIsDisabled] = useState(true); // new state variable
 
@@ -306,7 +307,8 @@ function Students() {
           student.email === "" &&
           student.phone === "" &&
           student.picture === "" &&
-          student.course_id === ""
+          student.course_id === ""&&
+          student.section_id ===""
       );
     }, [
       student.name,
@@ -314,6 +316,7 @@ function Students() {
       student.phone,
       student.picture,
       student.course_id,
+      student.section_id
     ]);
 
     const handleSubmit = (event) => {
@@ -325,6 +328,7 @@ function Students() {
       formData.append("phone", student.phone);
       formData.append("course_id", student.course_id);
       formData.append("picture", student.picture);
+      formData.append("section_id", student.section_id);
 
       axios
         .post("http://localhost:8000/api/auth/student", formData, {
@@ -342,6 +346,7 @@ function Students() {
             phone: "",
             picture: "",
             course_id: "",
+            section_id:"",
           });
           setOpen(false);
         })
@@ -383,6 +388,14 @@ function Students() {
           <TextField
             label="course_id"
             name="course_id"
+            onChange={handleFormChange}
+            fullWidth
+            required
+            sx={{ mb: 2 }}
+          />
+           <TextField
+            label="section_id"
+            name="section_id"
             onChange={handleFormChange}
             fullWidth
             required

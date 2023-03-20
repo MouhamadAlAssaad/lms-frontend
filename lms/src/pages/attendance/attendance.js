@@ -253,7 +253,7 @@ function Attendance() {
 
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
     <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
-    Add Course
+    Attendance
     <AddIcon style={{ marginLeft: "0.5em" }} />
     </Button>
     </Box>

@@ -316,19 +316,19 @@ const get= (id) => {
 
 
                 </MenuItem>,
-                 <MenuItem key="section">
-                <NavLink
-  to={{
-    pathname: "/sections",
-    state: { options: options, setOptions: setOptions }
-  }}
-  onClick={() => get(course.id)}
->
-  <span style={{ color: "black" }}>Section</span>
-</NavLink>
+//                  <MenuItem key="section">
+//                 <NavLink
+//   to={{
+//     pathname: "/sections",
+//     state: { options: options, setOptions: setOptions }
+//   }}
+//   onClick={() => get(course.id)}
+// >
+//   <span style={{ color: "black" }}>Section</span>
+// </NavLink>
 
 
-</MenuItem>,
+// </MenuItem>,
 
       
               <MenuItem

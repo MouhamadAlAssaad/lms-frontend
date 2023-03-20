@@ -14,10 +14,11 @@ const Login = () => {
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(["name"]);
+  const [error, setError] = useState(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
+  
     fetch("http://localhost:8000/api/login", {
       method: "POST",
       headers: {
@@ -28,7 +29,12 @@ const Login = () => {
         password: password,
       }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Invalid email or password");
+        }
+        return response.json();
+      })
       .then((data) => {
         console.log("Login response:", data);
         if (data.access_token) {
@@ -37,9 +43,13 @@ const Login = () => {
           navigate("/dashboard");
         }
       })
-      .catch((error) => console.error(error));
+      .catch((error) => {
+        console.error(error);
+        setError("Invalid email or password");
+      });
   };
-
+  
+  
   return (
     // <>
     // <div>
@@ -74,6 +84,7 @@ const Login = () => {
           <Sidebar />
         ) : (
           <form className="login-form" onSubmit={handleSubmit}>
+             {error && <div className="error">{error}</div>}
             <div>
               <input
                 type="text"

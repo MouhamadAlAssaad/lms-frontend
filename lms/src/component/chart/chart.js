@@ -145,9 +145,9 @@ import {
 
 function Chart() {
   const [attendanceData, setAttendanceData] = useState([]);
-
+  const dataUser = JSON.parse(Cookies.get("auth"));
+  const token = dataUser.access_token;
   useEffect(()=>{
-    const token = Cookies.get("auth");
     axios
       .get("http://localhost:8000/api/auth/attendance", {
         headers: { Authorization: `Bearer ${token}` },
