@@ -11,14 +11,21 @@ import student from "./icons/student.png";
 import user from "./icons/user.png";
 import { useCookies } from "react-cookie";
 import Cookies from "js-cookie";
+import { FaConfluence} from "react-icons/fa"
 
 
 
 
 
 function Sidebar(props) {
+    const [isOpen, setIsOpen] = useState(true);
   const authCookie = Cookies.get("auth");
   let isSuper = false; 
+
+ function handleClick() {
+   const sidebar = document.querySelector(".sidebar");
+   sidebar.classList.toggle("minimized");
+ }
   if (!authCookie) {
   
   } else {
@@ -48,57 +55,63 @@ function Sidebar(props) {
 
   if (useLocation().pathname == "/") return null;
   return (
-    <div className="sidebar">
-      <img className="sidebar_image" src={logo} alt="Logo" />
-      <nav>
+    <div class="sidebar">
+      <img class="sidebar_image" src={logo} alt="Logo" />
+      <nav className="nav-link">
         <NavLink
           to="/dashboard"
-          className="sidebar-links"
+          class="sidebar-links"
           onClick={() => handleTabClick(5)}
         >
-          <img className="sidebar_icons" src={report} alt="Logo" />
-          Dashboard
+          <img class="sidebar_icons" src={report} alt="Logo" />
+          <span>Dashboard</span>
         </NavLink>
-        {isSuper? <NavLink
-          to="/admins"
-          className="sidebar-links"
-          onClick={() => handleTabClick(1)}
-        >
-          {" "}
-          <img className="sidebar_icons" src={user} alt="Logo" />
-          Admin
-        </NavLink>:null}
+        {isSuper ? (
+          <NavLink
+            to="/admins"
+            class="sidebar-links"
+            onClick={() => handleTabClick(1)}
+          >
+            {" "}
+            <img class="sidebar_icons" src={user} alt="Logo" />
+            <span>Admin</span>
+          </NavLink>
+        ) : null}
 
         <NavLink
           to="/students"
-          className="sidebar-links"
+          class="sidebar-links"
           onClick={() => handleTabClick(1)}
         >
-          <img className="sidebar_icons" src={student} alt="Logo" />
-          Students
+          <img class="sidebar_icons" src={student} alt="Logo" />
+          <span>Students</span>
         </NavLink>
         <NavLink
           to="/classes"
-          className="sidebar-links"
+          class="sidebar-links"
           onClick={() => handleTabClick(2)}
         >
-          <img className="sidebar_icons" src={presentation} alt="Logo" />
-          Class
+          <img class="sidebar_icons" src={presentation} alt="Logo" />
+          <span>Class</span>
         </NavLink>
         <NavLink
           to="/attendance"
-          className="sidebar-links"
+          class="sidebar-links"
           onClick={() => handleTabClick(4)}
         >
-          <img className="sidebar_icons" src={calender} alt="Logo" />
-          Attendance
+          <img class="sidebar_icons" src={calender} alt="Logo" />
+          <span>Attendance</span>
         </NavLink>
-      </nav>
-      <h3>
-        <Link to="/" onClick={logout} className="logout ">
-        <img className="sidebar_icons" src={out}  alt="Logo" />
-          Logout
+        <Link to="/" onClick={logout} className="sidbar-links">
+          <img className="sidebar_icons" src={out} alt="Logo" />
+          <span>logout</span>
         </Link>
+      </nav>
+      <h3 className="toggle" onClick={handleClick}>
+        
+          
+          <FaConfluence />
+
       </h3>
     </div>
   );

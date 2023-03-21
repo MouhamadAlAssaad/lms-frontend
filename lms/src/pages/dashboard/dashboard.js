@@ -98,9 +98,15 @@ function Dashboard() {
   return (
     <div>
 <div className="content">
-<Roundchart percentPresent={percentPresent} percentAbsent={percentAbsent} percentLate={percentLate} />
+  <div className="pakage">
+<Roundchart  percentPresent={percentPresent} percentAbsent={percentAbsent} percentLate={percentLate}/>
+</div>
+<div className="paKage">
 <StudentCard numStudents={numStudents} />
+</div>
+<div className="pakage down">
 <AdminCard numAdmins={numAdmins} />
+</div>
 </div>
 <Chart />
       

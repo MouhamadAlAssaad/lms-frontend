@@ -4,10 +4,15 @@
     margin-top: 15px;
     position: absolute;
     top: -20px;
-    right: 50%;
-
-    
+    right: 0%;
+    padding: 0px 15px;
+    padding-left: 30px;
+    border-radius: 0% 0% 0% 30%;
+    background-color: rgb(124, 124, 255);
+    color: white;
 }
+
+
 /*
 .topbar-admin {
     display: flex;
