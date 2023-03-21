@@ -27,6 +27,7 @@ function Admin() {
 
       const dataUser = JSON.parse(Cookies.get("auth"));
       const token = dataUser.access_token;
+      
 
 
 
@@ -48,9 +49,6 @@ function Admin() {
             },
             { accessorKey: "name", header: "Name" },
             { accessorKey: "email", header: "Email", type: "unique" },
-            // { accessorKey: "email_verified_at", header: "Email Verified AT", type: "nullable"},
-            // { accessorKey: "password", header: "Password"},
-            // { accessorKey: "remember_token", header: "remember Token"},
             {
               accessorKey: "created_at",
               header: "created AT",
@@ -153,112 +151,93 @@ function Admin() {
     });
   };
 
-  // const [formData, setFormData] = useState({
-  //   name: "",
-  //   capacity: "",
-  //   content: "",
-  // });
-
-  const AddAdminForm = () => {
-    const [admin, setAdmin] = useState({
-      name: "",
+   const AddAdminForm = () => {
+     const [admin, setAdmin] = useState({
+       name: "",
       email: "",
       password: "",
-    });
-    const [isDisabled, setIsDisabled] = useState(true);
-    const handleFormChange = (event) => {
-      const { name, value } = event.target;
-      setAdmin((prevState) => ({ ...prevState, [name]: value }));
-    };
+      is_super: 0,
+     });
+     const [isDisabled, setIsDisabled] = useState(true); // new state variable
 
-    useEffect(() => {
-      setIsDisabled(
-        admin.name === "" &&
-          admin.content === "" &&
-          admin.capacity === "" &&
-          admin.course_id === ""
-      );
-    }, [admin.name, admin.content, admin.capacity, admin.course_id]);
+     const handleFormChange = (event) => {
+      console.log(admin)
+       const { name, value } = event.target;
+       setAdmin((prevState) => ({ ...prevState, [name]: value }));
+     };
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      axios
-        .post(
-          "http://localhost:8000/api/register",
-          {
-            name: admin.name,
-            email: admin.email,
-            password: admin.password,
-            // course_id: admin.course_id,
-          },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        )
-        .then((response) => {
-          console.log(response.data);
-          setData([...data, response.data]);
-          setAdmin({
-            name: "",
-            email: "",
-            password: "",
-          });
-          setOpen(false);
-        });
-    };
+     useEffect(() => {
+       setIsDisabled(admin.name === "" && admin.email === "" && admin.password === "");
+     }, [admin.name, admin.email, admin.password]);
+     //////////////////////////
+     console.log(admin.name, admin.email, admin.password)
+     const handleSubmit = (event) => {
+       event.preventDefault();
+       axios
+         .post(
+           "http://localhost:8000/api/register",
+           {
+             name: admin.name,
+             email: admin.email,
+             password: admin.password,
+             is_super : admin.is_super
+           },
+           {
+             headers: { Authorization: `Bearer ${token}` },
+           }
+         )
+         .then((response) => {
+          console.log("here the response data")
+           console.log(response.data);
+           setData([...data, response.data]);
+           setAdmin({
+             name: "",
+             email: "",
+             password: "",
+           });
+           setOpen(false);
+         });
+     };
 
-    return (
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Add New admin</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Name"
-            name="name"
-            // value={admin.name}
-            onChange={handleFormChange}
-            fullWidth
-            required
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="email"
-            name="email"
-            // value={admin.email}
-            onChange={handleFormChange}
-            fullWidth
-            required
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            label="password"
-            name="password"
-            // value={admin.password}
-            onChange={handleFormChange}
-            fullWidth
-            required
-            sx={{ mb: 2 }}
-          />
-          {/* <TextField
-            label="course_id"
-            name="course_id"
-            value={admin.course_id}
-            onChange={handleFormChange}
-            fullWidth
-            required
-            sx={{ mb: 2 }}
-          /> */}
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSubmit} disabled={isDisabled}>
-            Add
-          </Button>{" "}
-          {/* add disabled prop */}
-        </DialogActions>
-      </Dialog>
-    );
-  };
-
+     return (
+       <Dialog open={open} onClose={() => setOpen(false)}>
+         <DialogTitle>Add New Course</DialogTitle>
+         <DialogContent>
+           <TextField
+             label="Name"
+             name="name"
+             onChange={handleFormChange}
+             fullWidth
+             required
+             sx={{ mb: 2 }}
+           />
+           <TextField
+             label="Email"
+             name="email"
+             onChange={handleFormChange}
+             fullWidth
+             required
+             sx={{ mb: 2 }}
+           />
+           <TextField
+             label="Password"
+             name="password"
+             onChange={handleFormChange}
+             fullWidth
+             required
+             sx={{ mb: 2 }}
+           />
+         </DialogContent>
+         <DialogActions>
+           <Button onClick={() => setOpen(false)}>Cancel</Button>
+           <Button onClick={handleSubmit} disabled={isDisabled}>
+             Add
+           </Button>{" "}
+           {/* add disabled prop */}
+         </DialogActions>
+       </Dialog>
+     );
+   };
   const [rowAdmin, setRowAdmin] = useState({});
 
   useEffect(() => {}, [rowAdmin]);
