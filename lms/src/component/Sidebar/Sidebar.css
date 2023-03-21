@@ -117,3 +117,6 @@ nav{
   top: 5px;
   left: 13px;
 }
+.toggle:hover{
+  cursor: pointer;
+}
