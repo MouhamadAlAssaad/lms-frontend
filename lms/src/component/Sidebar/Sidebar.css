@@ -9,6 +9,7 @@
   justify-content: space-between;
   height: 96vh;
   width: 30vh;
+  border-right: 2px solid white;
 }
 
 /* .sidebar-links,
@@ -119,4 +120,8 @@ nav{
 }
 .toggle:hover{
   cursor: pointer;
+}
+
+.sidebar_image {
+  filter: invert();
 }
