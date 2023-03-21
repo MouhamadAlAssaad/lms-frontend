@@ -16,7 +16,6 @@ import Studentsbysection from "./pages/studentsbysection/studentsbysection";
 
 function App() {
  
-
   return (
     <div className="App">
       <div className="App-sidebar">
