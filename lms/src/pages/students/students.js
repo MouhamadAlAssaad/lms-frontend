@@ -349,6 +349,7 @@ function Students() {
             section_id:"",
           });
           setOpen(false);
+          Swal.fire("Success!", "Student added successfully.", "success");
         })
         .catch((error) => {
           console.log(error);
@@ -425,6 +426,7 @@ function Students() {
   return (
     <>
       <div className="table-container">
+        <p>Student page</p>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
             variant="contained"

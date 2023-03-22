@@ -1,19 +1,33 @@
 .card {
-    background-color: rgb(124, 124, 255);
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    padding: 20px;
-    width: 300px;
+  background-color: rgb(124, 124, 255);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  padding: 20px;
+  width: 300px;
+}
+
+.card-header {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 60px;
+  margin: 0;
+}
+
+.card-text {
+  font-size: small;
+  color: #fff;
+}
+
+@media only screen and (max-width: 600px) {
+  .card {
+    width: 70%;
   }
-  
-  .card-header {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-  
+
   .card-title {
-    font-size: 60px;
-    margin: 0;
+    font-size: 40px;
   }
-  
+}

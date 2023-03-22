@@ -67,6 +67,7 @@ function Roundchart(props) {
   
     render() {
       return (
+        <ResponsiveContainer width="100%">
         <div style={{ width: '30%', height: '400px' }}>
           <PieChart width={400} height={400}>
             <Pie
@@ -83,6 +84,7 @@ function Roundchart(props) {
             />
           </PieChart>
         </div>
+        </ResponsiveContainer>
       );
     }
   }

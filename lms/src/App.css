@@ -7,3 +7,7 @@
   overflow-y: auto;
   flex-basis: 100%;
 }
+p{
+  font-size: xx-large;
+  color: rgb(124, 124, 255);
+}

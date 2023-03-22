@@ -228,6 +228,7 @@ function Classes() {
             description: "",
           });
           setOpen(false);
+          Swal.fire("Success!", "Course added successfully.", "success");
         });
     };
 
@@ -283,6 +284,7 @@ const get= (id) => {
   return (
     <>
       <div className="table-container">
+      <p>Class page</p>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
             variant="contained"

@@ -14,9 +14,6 @@ import Cookies from "js-cookie";
 import { FaConfluence} from "react-icons/fa"
 
 
-
-
-
 function Sidebar(props) {
     const [isOpen, setIsOpen] = useState(true);
   const authCookie = Cookies.get("auth");
@@ -55,8 +52,8 @@ function Sidebar(props) {
 
   if (useLocation().pathname == "/") return null;
   return (
-    <div class="sidebar">
-      <img class="sidebar_image" src={logo} alt="Logo" />
+    <div className="sidebar">
+      <img className="sidebar_image" src={logo} alt="Logo" />
       <nav className="nav-link">
         <NavLink
           to="/dashboard"

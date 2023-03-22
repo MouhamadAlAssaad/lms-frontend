@@ -97,6 +97,8 @@ function Dashboard() {
 
   return (
     <div>
+       <p className="text">Dashboard page</p>
+   
 <div className="content">
   <div className="pakage">
 <Roundchart  percentPresent={percentPresent} percentAbsent={percentAbsent} percentLate={percentLate}/>

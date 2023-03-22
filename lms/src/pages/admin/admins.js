@@ -172,36 +172,36 @@ function Admin() {
      //////////////////////////
      console.log(admin.name, admin.email, admin.password)
      const handleSubmit = (event) => {
-       event.preventDefault();
-       axios
-         .post(
-           "http://localhost:8000/api/register",
-           {
-             name: admin.name,
-             email: admin.email,
-             password: admin.password,
-             is_super : admin.is_super
-           },
-           {
-             headers: { Authorization: `Bearer ${token}` },
-           }
-         )
-         .then((response) => {
-          console.log("here the response data")
-           console.log(response.data);
-           setData([...data, response.data]);
-           setAdmin({
-             name: "",
-             email: "",
-             password: "",
-           });
-           setOpen(false);
-         });
-     };
+      event.preventDefault();
+      axios
+        .post(
+          "http://localhost:8000/api/register",
+          {
+            name: admin.name,
+            email: admin.email,
+            password: admin.password,
+            is_super : admin.is_super
+          },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((response) => {
+          setData([...data, response.data]);
+          setAdmin({
+            name: "",
+            email: "",
+            password: "",
+          });
+          setOpen(false);
+          Swal.fire("Success!", "Admin added successfully.", "success");
+        });
+    };
+    
 
      return (
        <Dialog open={open} onClose={() => setOpen(false)}>
-         <DialogTitle>Add New Course</DialogTitle>
+         <DialogTitle>Add New Admin</DialogTitle>
          <DialogContent>
            <TextField
              label="Name"
@@ -250,7 +250,9 @@ function Admin() {
 
   return (
     <>
+   
       <div className="table-container">
+      <p>Admin page</p>
         <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
           <Button
             variant="contained"

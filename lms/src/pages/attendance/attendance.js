@@ -218,6 +218,7 @@ function Attendance() {
          
           });
           setOpen(false);
+          Swal.fire("Success!", "Attendance added successfully.", "success");
         });
     };
   
@@ -250,7 +251,7 @@ function Attendance() {
     <>
     
     <div className='table-container'>
-
+    <p>Attendance page</p>
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
     <Button variant="contained" color="primary" style={{ backgroundColor: "rgb(124, 124, 255)" }} onClick={() => setOpen(true)}>
     Attendance

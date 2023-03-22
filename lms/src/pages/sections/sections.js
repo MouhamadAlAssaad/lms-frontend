@@ -220,6 +220,7 @@ function Sections(props) {
             course_id: "",
           });
           setOpen(false);
+          Swal.fire("Success!", "Section added successfully.", "success");
         });
     };
 
